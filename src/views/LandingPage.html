@@ -14,12 +14,10 @@
 <div id="app">
   <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex justify-between items-center ">
     <div class="flex items-center gap-2">
-        <img
-                src="../assets/logo-nautik.svg"
-                srcset="../assets/logo-nautik.svg" class="w-20 h-20 p-0 m-0"/>
-      <span class="text-2xl  tracking-widest text-slate-900">NAUTIK</span>
+        <img src="../assets/logoWOletter.png"  class="h-12 p-0 m-0"/>
+        <span id="logos" class="text-3xl">NAUTIK®</span>
     </div>
-    <a href="#" class="bg-[#0f172a] hover:bg-slate-800 text-white text-sm  py-2 px-6 rounded shadow-md transition-colors">
+    <a href="#" class="bg-[#0f172a] hover:bg-slate-800 text-white text-sm  py-2 px-6 rounded    qaA shadow-md transition-colors">
       Log in
     </a>
   </nav>
@@ -27,9 +25,9 @@
   <section class="max-w-6xl mx-auto px-4 mb-12">
     <div class="bg-[#0f172a] rounded-2xl p-8 md:p-12 shadow-xl">
       <h1 class="text-white text-3xl md:text-4xl  mb-8">
-        Reserva amarres con <span class="">NAUTIK®</span>
+        Reserva amarres con <span id="logos" class="">NAUTIK®</span>
       </h1>
-      <div class="bg-white rounded-lg p-1 flex flex-col md:flex-row shadow-sm overflow-hidden text-slate-900">
+      <div class="bg-white rounded-lg rounded-r-3xl p-1 flex flex-col md:flex-row shadow-sm overflow-hidden text-slate-900 h-14">
         <div class="flex-1 p-2 border-b md:border-b-0 md:border-r border-gray-200">
           <label class="block text-xs  uppercase">Puerto</label>
           <input type="text" placeholder="Busca un destino" class="w-full text-sm outline-none mt-1">
@@ -50,7 +48,7 @@
           <label class="block text-xs  uppercase">Manga</label>
           <input type="text" placeholder="Metros" class="w-full text-sm outline-none mt-1">
         </div>
-        <button class="bg-[#3b3bf5] hover:bg-blue-700 text-white  py-3 px-8 rounded md:rounded-l-none md:ml-1 transition-colors">
+        <button class="bg-[#3b3bf5] hover:bg-blue-700 text-white  py-3 px-6 rounded-r-3xl md:rounded-l-none md:ml-1 transition-colors">
           Buscar
         </button>
       </div>
@@ -59,8 +57,8 @@
 
   <section class="max-w-6xl mx-auto px-4 pb-20">
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-      <div v-for="puerto in puertos" :key="puerto.nombre" class="group relative rounded-xl overflow-hidden border-2 border-[#0f172a] shadow-lg">
-        <img :src="puerto.imagen" :alt="puerto.nombre" :class="['w-full object-cover', puerto.clase]">
+      <div v-for="puerto in puertos" :key="puerto.nombre" class="group relative rounded-2xl overflow-hidden border-8 border-[#0f172a] shadow-lg">
+        <img :src="puerto.imagen" :alt="puerto.nombre" :class="['w-full object-cover rounded-l', puerto.clase]">
         <div class="bg-[#0f172a] p-3 absolute bottom-0 w-full">
           <h3 class="text-white text-xl ">{{ puerto.nombre }}</h3>
         </div>
@@ -69,7 +67,7 @@
   </section>
 
   <section class="max-w-6xl mx-auto px-4 py-16">
-    <div class="border-2 border-[#3b3bf5] p-8 md:p-12 bg-white">
+    <div class=" p-8 md:p-12 bg-white">
       <h2 class="text-4xl  text-slate-900 mb-12">F & Q</h2>
       <div class="grid grid-cols-1 md:grid-cols-2 gap-x-16 gap-y-4">
         <div v-for="(columna, idx) in faqColumnas" :key="idx" class="flex flex-col">
@@ -88,9 +86,7 @@
     <div class="max-w-6xl mx-auto px-4 flex flex-col md:flex-row justify-between items-start md:items-center gap-8">
       <div class="flex flex-col gap-6">
         <div class="bg-white p-2 rounded-full w-fit">
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="#0f172a" class="w-8 h-8">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M12 21a9.004 9.004 0 008.716-6.747M12 21a9.004 9.004 0 01-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S13.627 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3m0 0a8.997 8.997 0 017.843 4.582M12 3a8.997 8.997 0 00-7.843 4.582m15.686 0A11.953 11.953 0 0112 10.5c-2.998 0-5.74-1.1-7.843-2.918m15.686 0A8.959 8.959 0 0121 12c0 .778-.099 1.533-.284 2.253m0 0A17.919 17.919 0 0112 16.5c-3.162 0-6.133-.815-8.716-2.247m0 0A9.015 9.015 0 013 12c0-1.605.42-3.113 1.157-4.418" />
-          </svg>
+            <img src="../assets/logoWOletter.png" srcset="../assets/logoWOletter.png" class="h-12 rounded-3xl p-0 m-0"/>
         </div>
         <div class="flex gap-4">
           <a href="#" class="hover:text-gray-300">IG</a>
@@ -119,10 +115,10 @@
   createApp({
     setup() {
       const puertos = ref([
-        { nombre: "Port d’Andratx", imagen: "https://images.unsplash.com/photo-1566373738872-4d22744c084a?auto=format&fit=crop&w=800", clase: "h-64" },
-        { nombre: "Porto Colom", imagen: "https://images.unsplash.com/photo-1544256718-3bcf237f3974?auto=format&fit=crop&w=800", clase: "h-64" },
-        { nombre: "Marina Cala D’Or", imagen: "https://images.unsplash.com/photo-1520116468816-95b69f847357?auto=format&fit=crop&w=800", clase: "h-80" },
-        { nombre: "Port Adriano", imagen: "https://images.unsplash.com/photo-1534349762230-e0cadf78f5da?auto=format&fit=crop&w=800", clase: "h-80" }
+        { nombre: "Port d’Andratx", imagen:"https://mallorcacaprice.com/wp-content/uploads/2024/10/fira-marinera-port-andratx.webp", clase: "h-64" },
+        { nombre: "Porto Colom", imagen: "https://e00-elmundo.uecdn.es/assets/multimedia/imagenes/2019/10/08/15705370670358_640x0.jpg", clase: "h-64" },
+        { nombre: "Marina Cala D’Or", imagen: "https://www.yachtdigest.com/wp-content/uploads/2024/03/marina-de-cala-dor-01.jpg", clase: "h-80" },
+        { nombre: "Port Adriano", imagen: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR_Vj4SL-DMFfqVRCja2-eHMIKZ0Z2ssolQGQ&s", clase: "h-80" }
       ]);
 
       const faqColumnas = ref([
