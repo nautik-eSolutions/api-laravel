@@ -8,18 +8,14 @@ use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+
     public function index()
     {
         $users = User::all();
         return response()->json($users, 200);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
+
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -49,18 +45,23 @@ class UserController extends Controller
         return response()->json($user, 201);
     }
 
-    /**
-     * Display the specified resource.
-     */
+
     public function show(string $userName)
     {
         $user = User::where('user_name', $userName)->get();
+        if (!$user) {
+            $data = [
+                'message' => "User not found",
+                'status' => 404
+            ];
+
+            return response()->json($data, 404);
+
+        }
         return response()->json($user, 200);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
+
     public function update(Request $request, string $userName)
     {
         $user = User::where('user_name', $userName)->get();
@@ -89,9 +90,9 @@ class UserController extends Controller
             ];
             return response()->json($data,400);
         }
-        $user->firstName =  $request->firstname;
-        $user->lastName = $request->lastName;
-        $user->userName = $request->userName;
+        $user->first_name =  $request->firstname;
+        $user->last_name = $request->lastName;
+        $user->user_name = $request->userName;
         $user->email = $request->email;
         $user->password = $request->password;
 
@@ -106,14 +107,17 @@ class UserController extends Controller
         return response()->json($data,200);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
+
+
     public function destroy(string $userName)
     {
         $user = User::where('user_name', $userName)->get();
 
         $user->delete();
+        $data = [
+            'message'=>"User has been deleted"
+        ];
+        return response()->json($data,204);
 
     }
 }
