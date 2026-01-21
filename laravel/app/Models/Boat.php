@@ -22,6 +22,9 @@ class Boat extends Model
     {
         return $this->belongsTo(User::class);
     }
-
+    public function boatType(): BelongsTo
+    {
+        return $this->belongsTo(BoatType::class);
+    }
 
 }
