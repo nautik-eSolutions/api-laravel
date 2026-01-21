@@ -4,9 +4,12 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use phpDocumentor\Reflection\Types\This;
 
 class User extends Authenticatable
 {
@@ -29,8 +32,19 @@ class User extends Authenticatable
         'password',
     ];
 
-    public function hasBoats() : HasMany
+    public function boats(): HasMany
     {
         return $this->hasMany(Boat::class);
     }
+
+    public function captains(): BelongsToMany
+    {
+        return $this->belongsToMany(Captain::class, 'user_captain');
+    }
+
+    public function owners(): BelongsToMany
+    {
+        return $this->belongsToMany(Owner::class,'user_captain');
+    }
+
 }
