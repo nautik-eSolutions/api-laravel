@@ -52,18 +52,18 @@ class UserController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $username)
+    public function show(string $userName)
     {
-        $user = User::where('user_name', $username)->get();
+        $user = User::where('user_name', $userName)->get();
         return response()->json($user, 200);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $username)
+    public function update(Request $request, string $userName)
     {
-        $user = User::where('user_name', $username)->get();
+        $user = User::where('user_name', $userName)->get();
         if (!$user) {
             $data = [
                 'message' => "User not found",
@@ -109,9 +109,9 @@ class UserController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $username)
+    public function destroy(string $userName)
     {
-        $user = User::where('user_name', $username)->get();
+        $user = User::where('user_name', $userName)->get();
 
         $user->delete();
 
