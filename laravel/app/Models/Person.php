@@ -3,6 +3,8 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasOne;
+use phpDocumentor\Reflection\Types\This;
 
 class Person extends Model
 {
@@ -23,5 +25,14 @@ class Person extends Model
         return [
             'birth_date' => 'date',
         ];
+    }
+
+    public function owner():HasOne
+    {
+        return $this->hasOne(Owner::class);
+    }
+
+    public function captain():HasOne{
+        return $this->hasOne(Captain::class);
     }
 }
