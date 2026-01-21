@@ -11,9 +11,12 @@ class Owner extends Model
 {
     protected $table = 'owner';
 
-    public function person(): BelongsTo
+
+    public $timestamps =false;
+
+    public function person()
     {
-        return $this->hasOne(Person::class);
+        return $this->hasOne(Person::class,'person_id');
     }
 
     public function user(): BelongsToMany
