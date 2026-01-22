@@ -3,47 +3,59 @@
 namespace App\Http\Controllers;
 
 use App\Models\Captain;
+use App\Models\Person;
 use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
+use PHPUnit\Metadata\Parser\CachingParser;
 
 class CaptainController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+
     public function index()
     {
-        //
+        $captains =  Captain::all();
+        if (!$captains){
+            $data = [
+                'message' => "No captains where found",
+                'status' => 404
+            ];
+
+            return response()->json($data, 404);
+        }
+
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
+    public function store(Request $request, String $personId)
     {
-        //
+        $person = Person::find($personId);
+        $capt = new Captain();
+        $capt->navigation_license=$request->navigationLicense;
+
+        $captain =  $person->captain()->save($capt);
+
+        $data = [
+            'captain'=>$captain,
+            'status'=>201
+        ];
+
+        return response()->json($data,201);
+
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Captain $captain)
+    public function show(Request $request)
     {
-        //
+
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
+
     public function update(Request $request, Captain $captain)
     {
-        //
+
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
+
     public function destroy(Captain $captain)
     {
-        //
+
     }
 }
