@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Person;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 
 class PersonController extends Controller
@@ -23,15 +24,28 @@ class PersonController extends Controller
 
     public function store(Request $request)
     {
-        $data = $request->validate([
-            'first_name' => ['required'],
-            'last_name' => ['required'],
-            'identification_document' => ['required'],
-            'birth_date' => ['required', 'date'],
-            'identification_document_type'=>['required',Rule::in('DNI','NIE','Passaporte')]
+        $validator = Validator::make($request->all(),[
+            'firstName' => ['required'],
+            'lastname' => ['required'],
+            'identificationDocument' => ['required'],
+            'birthDate' => ['required', 'date'],
+            'identificationDocumentType'=>['required',Rule::in('DNI','NIE','Passaporte')]
         ]);
-
-        $user = Person::create($data);
+        if ($validator->fails()){
+            $data = [
+                'message'=>'Error in data validation',
+                'errors'=>$validator->errors(),
+                'status'=>400
+            ];
+            return response()->json($data,400);
+        }
+        $user = Person::create([
+            'first_name' => $request->firsName,
+            'last_name' => $request->lastName,
+            'identification_document' => $request->identificationDocument,
+            'birth_date' => $request->birthDate,
+            'identification_document_type'=>$request->identifactionDocumentType
+        ]);
 
         return response()->json($user,201);
 
@@ -53,13 +67,23 @@ class PersonController extends Controller
 
     public function update(Request $request, String $id)
     {
-        $request->validate([
+        $validator = Validator::make($request->all(),[
             'first_name' => ['required'],
             'last_name' => ['required'],
             'identification_document' => ['required'],
             'birth_date' => ['required', 'date'],
             'identification_document_type'=>['required',Rule::in('DNI','NIE','Passaporte')]
         ]);
+
+        if ($validator->fails()){
+            $data = [
+                'message'=>'Error in data validation',
+                'errors'=>$validator->errors(),
+                'status'=>400
+            ];
+            return response()->json($data,400);
+        }
+
         $person = Person::find($id);
 
         $person->first_name =  $request->firstName;
@@ -81,6 +105,14 @@ class PersonController extends Controller
     public function destroy(String $id)
     {
         $person = Person::find($id);
+
+        if (!$person) {
+            $data = [
+                'message' => "Person not found",
+                'status' => 404
+            ];
+            return response()->json($data, 404);
+        }
 
         $person->delete();
         $data = [
