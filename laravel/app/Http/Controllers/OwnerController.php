@@ -21,7 +21,7 @@ class OwnerController extends Controller
     }
 
 
-    public function store(String $id)
+    public function store(String $personId)
     {
      $person = Person::find($id);
 
@@ -52,9 +52,9 @@ class OwnerController extends Controller
 
 
 
-    public function show(String $id)
+    public function show(String $ownerId)
     {
-        $owner = Owner::find($id);
+        $owner = Owner::find($ownerId);
 
         if (!$owner){
             $data = [
@@ -77,7 +77,7 @@ class OwnerController extends Controller
 
     public function update(Request $request, Owner $owner)
     {
-        //
+        //Falta decidir si hay que poner la documentación de propiedad en owner
     }
 
 
@@ -85,10 +85,22 @@ class OwnerController extends Controller
     {
         $owner =  Owner::find($id);
 
+        if (!$owner){
+            $data = [
+                'message'=>'No captain was found',
+                'status'=>404
+            ];
+            return response()->json($data,404);
+        }
+
         $owner->delete();
         $data=[
-          'message'=>'The owner has been deleted'
+          'message'=>'The owner has been deleted',
+            'status'=>204
         ];
+
+        return response()->json($data,204);
+
 
 
     }
