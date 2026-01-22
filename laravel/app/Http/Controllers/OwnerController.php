@@ -23,7 +23,7 @@ class OwnerController extends Controller
 
     public function store(String $personId)
     {
-     $person = Person::find($id);
+     $person = Person::find($personId);
 
         if (!$person) {
             $data = [
@@ -81,9 +81,9 @@ class OwnerController extends Controller
     }
 
 
-    public function destroy(String $id)
+    public function destroy(String $ownerId)
     {
-        $owner =  Owner::find($id);
+        $owner =  Owner::find($ownerId);
 
         if (!$owner){
             $data = [

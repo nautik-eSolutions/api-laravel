@@ -43,7 +43,7 @@ class CaptainController extends Controller
 
     }
 
-    public function show($captainId)
+    public function show(String $captainId)
     {
 
         $captain = Captain::find($captainId);

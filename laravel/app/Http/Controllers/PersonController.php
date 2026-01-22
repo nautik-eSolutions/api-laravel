@@ -51,9 +51,9 @@ class PersonController extends Controller
 
     }
 
-    public function show(String $id)
+    public function show(String $personId)
     {
-        $person = Person::find($id);
+        $person = Person::find($personId);
 
         if (!$person) {
             $data = [
@@ -65,7 +65,7 @@ class PersonController extends Controller
         return response()->json($person, 200);
     }
 
-    public function update(Request $request, String $id)
+    public function update(Request $request, String $personId)
     {
         $validator = Validator::make($request->all(),[
             'first_name' => ['required'],
@@ -84,7 +84,7 @@ class PersonController extends Controller
             return response()->json($data,400);
         }
 
-        $person = Person::find($id);
+        $person = Person::find($personId);
 
         $person->first_name =  $request->firstName;
         $person->last_name = $request->lastName;
@@ -102,9 +102,9 @@ class PersonController extends Controller
         return response()->json($data,200);
     }
 
-    public function destroy(String $id)
+    public function destroy(String $personId)
     {
-        $person = Person::find($id);
+        $person = Person::find($personId);
 
         if (!$person) {
             $data = [
