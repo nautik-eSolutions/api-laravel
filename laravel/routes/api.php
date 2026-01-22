@@ -7,34 +7,34 @@ use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/users/{userName}', [UserController::class,'show']);
-Route::patch('/users/{userName}',[UserController::class,'update']);
-Route::delete('/users/{userName}',[UserController::class,'destroy']);
-Route::post('/users',[UserController::class,'store']);
+Route::get('/users/{userName}', [UserController::class, 'show']);
+Route::patch('/users/{userName}', [UserController::class, 'update']);
+Route::delete('/users/{userName}', [UserController::class, 'destroy']);
+Route::post('/users', [UserController::class, 'store']);
 
 
-Route::get('/boats/{userName}',);
+Route::get('/boats/{userName}');
 Route::get('/boats/{userName}/{boatName}');
 Route::post('/boats/{userName}');
 Route::patch('/boats/{userName}/{boatName}');
 Route::delete('/boats/{userName}/{boatName}');
 
 
-Route::get('/captains',);
-Route::post('/captains/{personId}',[CaptainController::class,'store']);
-Route::get('/captains/{captainId}',[CaptainController::class,'show']);
-Route::patch('/captains/{captainId}',[CaptainController::class,'update']);
-Route::delete('/captains/{captainId}',[CaptainController::class,'destroy']);
+Route::get('/captains');
+Route::post('/captains/{personId}', [CaptainController::class, 'store']);
+Route::get('/captains/{captainId}', [CaptainController::class, 'show']);
+Route::patch('/captains/{captainId}', [CaptainController::class, 'update']);
+Route::delete('/captains/{captainId}', [CaptainController::class, 'destroy']);
 
 
-Route::get('/owners',[OwnerController::class,'index']);
-Route::get('/owners/{ownerId}',[OwnerController::class,'show']);
-Route::post('/owners/{personId}',[OwnerController::class,'store']);
+Route::get('/owners', [OwnerController::class, 'index']);
+Route::get('/owners/{ownerId}', [OwnerController::class, 'show']);
+Route::post('/owners/{personId}', [OwnerController::class, 'store']);
 Route::patch('/owners/{ownerId}');
-Route::delete('/owners/{ownerId}',[OwnerController::class,'destroy']);
+Route::delete('/owners/{ownerId}', [OwnerController::class, 'destroy']);
 
-Route::get('/persons',[PersonController::class,'index']);
-Route::post('/persons',[PersonController::class,'store']);
-Route::patch('/persons/{personId}',[PersonController::class,'update']);
-Route::get('/persons/{personId}',[PersonController::class,'show']);
-Route::delete('/persons/{personId}',[PersonController::class,'destroy']);
+Route::get('/persons', [PersonController::class, 'index']);
+Route::post('/persons', [PersonController::class, 'store']);
+Route::patch('/persons/{personId}', [PersonController::class, 'update']);
+Route::get('/persons/{personId}', [PersonController::class, 'show']);
+Route::delete('/persons/{personId}', [PersonController::class, 'destroy']);
