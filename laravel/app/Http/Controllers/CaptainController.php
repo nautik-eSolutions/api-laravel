@@ -6,6 +6,7 @@ use App\Models\Captain;
 use App\Models\Person;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Validator;
 use PHPUnit\Metadata\Parser\CachingParser;
 
 class CaptainController extends Controller
@@ -42,20 +43,70 @@ class CaptainController extends Controller
 
     }
 
-    public function show(Request $request)
+    public function show($captainId)
     {
+
+        $captain = Captain::find($captainId);
+
+        if (!$captain){
+            $data = [
+                'message'=>'No captain was found',
+                'status'=>404
+            ];
+            return response()->json($data,404);
+        }
+
+        $data = [
+            'captain'=>$captain,
+            'status'=>200
+        ];
+
+        return response()->json($data,200);
+
+    }
+
+    public function update(Request $request, $captainId)
+    {
+        $validator = Validator::make($request->all(), [
+            "navigationLicense"=>'required'
+        ]);
+
+        if ($validator->fails()){
+            $data = [
+                'message'=>'Error in data validation',
+                'errors'=>$validator->errors(),
+                'status'=>400
+            ];
+            return response()->json($data,400);
+        }
+
+        $captain = Captain::find($captainId);
+        $captain->navigationLicense = $request->navigationLicense;
+        $data = [
+            'message'=>$captain->save(),
+            'status'=>200
+        ];
+
+        return response()->json($data,200);
 
     }
 
 
-    public function update(Request $request, Captain $captain)
+    public function destroy($captainId)
     {
+        $captain = Captain::find($captainId);
+        if (!$captain){
+            $data = [
+                'message'=>'No captain was found',
+                'status'=>404
+            ];
+            return response()->json($data,404);
+        }
 
-    }
-
-
-    public function destroy(Captain $captain)
-    {
-
+        $captain->delete();
+        $data = [
+            'message'=>"User has been deleted"
+        ];
+        return response()->json($data,204);
     }
 }
