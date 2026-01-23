@@ -4,6 +4,8 @@ namespace App\Models\users;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use App\Models\boats\Boat;
+use App\Models\persons\Captain;
+use App\Models\persons\Owner;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;

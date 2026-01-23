@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\persons;
 
 use App\Http\Controllers\Controller;
-use App\Models\users\Captain;
-use App\Models\users\Person;
+use App\Models\persons\Captain;
+use App\Models\persons\Person;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 

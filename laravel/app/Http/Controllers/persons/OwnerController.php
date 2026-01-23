@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\persons;
 
 use App\Http\Controllers\Controller;
-use App\Models\users\Owner;
-use App\Models\users\Person;
+use App\Models\persons\Owner;
+use App\Models\persons\Person;
 use Illuminate\Http\Request;
 
 class OwnerController extends Controller

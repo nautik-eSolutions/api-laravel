@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models\users;
+namespace App\Models\persons;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;

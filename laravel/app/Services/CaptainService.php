@@ -2,7 +2,7 @@
 
 namespace App\Services;
 
-use App\Models\users\Captain;
+use App\Models\persons\Captain;
 
 class CaptainService
 {
