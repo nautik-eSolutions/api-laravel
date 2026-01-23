@@ -13,7 +13,7 @@ class BoatType extends Model
         'name'
     ];
 
-    public function boats () : HasMany
+    public function boats(): HasMany
     {
         return $this->hasMany(Boat::class);
     }

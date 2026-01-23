@@ -32,6 +32,7 @@ class User extends Authenticatable
         'password',
     ];
 
+
     public function boats(): HasMany
     {
         return $this->hasMany(Boat::class);
