@@ -9,7 +9,8 @@ class Boat extends Model
 {
     protected $table =  'boat';
 
-
+    protected $guarded = [];
+    public $timestamps = false;
     protected $fillable = [
         'name',
         'registry_number',

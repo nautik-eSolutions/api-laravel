@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\BoatController;
 use App\Http\Controllers\CaptainController;
 use App\Http\Controllers\OwnerController;
 use App\Http\Controllers\PersonController;
@@ -13,11 +14,11 @@ Route::delete('/users/{userName}', [UserController::class, 'destroy']);
 Route::post('/users', [UserController::class, 'store']);
 
 
-Route::get('/boats/{userName}');
-Route::get('/boats/{userName}/{boatName}');
-Route::post('/boats/{userName}');
-Route::patch('/boats/{userName}/{boatName}');
-Route::delete('/boats/{userName}/{boatName}');
+Route::get('/boats/{userName}',[BoatController::class,'index']);
+Route::get('/boats/{userName}/{boatName}',[BoatController::class,'show']);
+Route::post('/boats/{userName}',[BoatController::class,'store']);
+Route::patch('/boats/{userName}/{boatName}',[BoatController::class,'update']);
+Route::delete('/boats/{userName}/{boatName}',[BoatController::class,'destroy']);
 
 
 Route::get('/captains');
