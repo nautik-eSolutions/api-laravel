@@ -15,7 +15,7 @@ Route::post('/users', [UserController::class, 'store']);
 
 
 Route::get('/boats/{userName}');
-Route::get('/boats/{userName}/{boatName}');
+Route::get('/boats/{userName}/{boatName}',[BoatController::class,'show']);
 Route::post('/boats/{userId}',[BoatController::class,'store']);
 Route::patch('/boats/{userName}/{boatName}');
 Route::delete('/boats/{userName}/{boatName}');

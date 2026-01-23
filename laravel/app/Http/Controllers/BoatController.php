@@ -6,6 +6,7 @@ use App\Models\Boat;
 use App\Models\BoatType;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use function Pest\Laravel\json;
@@ -84,9 +85,27 @@ class BoatController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Boat $boat)
+    public function show(string $userName,string $boatName)
     {
-        //
+        $user = User::where('user_name',$userName)->first();
+
+        $boat = DB::table('boat')
+            ->where('user_id',$user->id)
+            ->where('name',$boatName)->first();
+
+        if (!$boat){
+            $data = [
+              'message'=>'No boat was found'
+            ];
+
+            return response()->json($data);
+        }
+
+
+        return response()->json($boat,200);
+
+
+
     }
 
     /**
