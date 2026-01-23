@@ -14,11 +14,11 @@ Route::delete('/users/{userName}', [UserController::class, 'destroy']);
 Route::post('/users', [UserController::class, 'store']);
 
 
-Route::get('/boats/{userName}');
+Route::get('/boats/{userName}',[BoatController::class,'index']);
 Route::get('/boats/{userName}/{boatName}',[BoatController::class,'show']);
 Route::post('/boats/{userId}',[BoatController::class,'store']);
-Route::patch('/boats/{userName}/{boatName}');
-Route::delete('/boats/{userName}/{boatName}');
+Route::patch('/boats/{userName}/{boatName}',[BoatController::class,'update']);
+Route::delete('/boats/{userName}/{boatName}',[BoatController::class,'destroy']);
 
 
 Route::get('/captains');

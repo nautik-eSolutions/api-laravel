@@ -14,9 +14,9 @@ use function Pest\Laravel\json;
 class BoatController extends Controller
 {
 
-    public function index(string $userId)
+    public function index(string $userName)
     {
-        $boats = User::find($userId)->boats;
+        $boats = User::where('user_name',$userName)->first()->boats;
 
         if (!$boats) {
             $data = [
@@ -36,9 +36,7 @@ class BoatController extends Controller
         return response()->json($data, 200);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
+
     public function store(Request $request,string $userId)
     {
         $user =  User::find($userId);
@@ -89,31 +87,81 @@ class BoatController extends Controller
     {
         $user = User::where('user_name',$userName)->first();
 
+        if (!$user){
+            $data = [
+                'message'=>'User not found',
+                'status'=>404
+            ];
+            return response()->json($data,404);
+        }
+
+
         $boat = DB::table('boat')
             ->where('user_id',$user->id)
             ->where('name',$boatName)->first();
 
         if (!$boat){
             $data = [
-              'message'=>'No boat was found'
+              'message'=>'No boat was found',
+                'status'=>404
             ];
 
-            return response()->json($data);
+            return response()->json($data,404);
         }
 
 
         return response()->json($boat,200);
 
-
-
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Boat $boat)
+
+    public function update(Request $request, string $userName, string $boatName)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            "name"=>'string',
+            "registry_number"=>'string',
+            "length"=>'int',
+            "beam"=>'int',
+            "draft"=>'int',
+            "boat_type"=>[Rule::in("motor","vela")]
+        ]);
+
+        $user = User::where('user_name',$userName)->first();
+
+
+        if (!$user){
+            $data = [
+                'message'=>'User not found',
+                'status'=>404
+            ];
+            return response()->json($data,404);
+        }
+
+        $rawBoat = DB::table('boat')
+            ->where('user_id',$user->id)
+            ->where('name',$boatName)->get();
+
+
+        $boat = Boat::hydrate($rawBoat->all())->first();
+
+        $boatUpdated = $boat->update($request->request->all());
+
+
+        if (!$boatUpdated){
+            $data = [
+                'message'=>'Was an error while updating your boat',
+                'status'=>401
+            ];
+            return response()->json($data,401);
+
+        }
+        $data = [
+          'boat'=>$boatUpdated,
+          'status'=>200
+        ];
+
+        return response()->json($data, 200);
+
     }
 
     /**
