@@ -1,15 +1,15 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\boats;
 
-use App\Models\Boat;
-use App\Models\BoatType;
-use App\Models\User;
+use App\Http\Controllers\Controller;
+use App\Models\boats\Boat;
+use App\Models\boats\BoatType;
+use App\Models\users\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
-use function Pest\Laravel\json;
 
 class BoatController extends Controller
 {

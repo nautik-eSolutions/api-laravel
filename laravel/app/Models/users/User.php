@@ -1,15 +1,14 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\users;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Models\boats\Boat;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use phpDocumentor\Reflection\Types\This;
 
 class User extends Authenticatable
 {

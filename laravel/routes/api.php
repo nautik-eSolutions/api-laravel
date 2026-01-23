@@ -1,11 +1,10 @@
 <?php
 
-use App\Http\Controllers\BoatController;
-use App\Http\Controllers\CaptainController;
-use App\Http\Controllers\OwnerController;
-use App\Http\Controllers\PersonController;
-use App\Http\Controllers\UserController;
-use Illuminate\Http\Request;
+use App\Http\Controllers\boats\BoatController;
+use App\Http\Controllers\persons\CaptainController;
+use App\Http\Controllers\persons\OwnerController;
+use App\Http\Controllers\persons\PersonController;
+use App\Http\Controllers\users\UserController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/users/{userName}', [UserController::class, 'show']);

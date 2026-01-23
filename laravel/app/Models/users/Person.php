@@ -1,10 +1,9 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\users;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;
-use phpDocumentor\Reflection\Types\This;
 
 class Person extends Model
 {

@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\ports;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Mooring extends Model
+class Port extends Model
 {
     //
 }

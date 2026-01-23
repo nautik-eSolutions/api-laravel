@@ -1,13 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\persons;
 
-use App\Models\Captain;
-use App\Models\Person;
+use App\Http\Controllers\Controller;
+use App\Models\users\Captain;
+use App\Models\users\Person;
 use Illuminate\Http\Request;
-use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Validator;
-use PHPUnit\Metadata\Parser\CachingParser;
 
 class CaptainController extends Controller
 {

@@ -2,8 +2,7 @@
 
 namespace App\Services;
 
-use App\Models\Captain;
-use Illuminate\Http\Request;
+use App\Models\users\Captain;
 
 class CaptainService
 {

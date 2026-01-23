@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\persons;
 
-use App\Models\Owner;
-use App\Models\Person;
+use App\Http\Controllers\Controller;
+use App\Models\users\Owner;
+use App\Models\users\Person;
 use Illuminate\Http\Request;
-use Termwind\Components\Dd;
 
 class OwnerController extends Controller
 {
