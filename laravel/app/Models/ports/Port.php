@@ -5,6 +5,7 @@ namespace App\Models\ports;
 use App\Models\locations\City;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Port extends Model
 {
@@ -22,5 +23,8 @@ class Port extends Model
         return $this->belongsTo(City::class);
     }
 
+    public function zones():HasMany{
+        return $this->hasMany(Zone::class);
+    }
 
 }
