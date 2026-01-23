@@ -4,10 +4,11 @@ namespace App\Models\ports;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Zone extends Model
 {
-    public $timestamps =  false;
+    public $timestamps = false;
     protected $table = 'zone';
 
     protected $fillable = [
@@ -15,9 +16,14 @@ class Zone extends Model
         'description'
     ];
 
-    public function port():BelongsTo
+    public function port(): BelongsTo
     {
         return $this->belongsTo(Port::class);
+    }
+
+    public function mooringCategories(): HasMany
+    {
+        return $this->hasMany(MooringCategory::class);
     }
 
 
