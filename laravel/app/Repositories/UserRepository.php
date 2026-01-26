@@ -28,5 +28,9 @@ class UserRepository implements UserInterface
 
     public function delete($id)
     {
+        $user = $this->show($id);
+
+        return $user->deleteOrFail();
+
     }
 }

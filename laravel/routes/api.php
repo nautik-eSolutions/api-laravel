@@ -5,14 +5,15 @@ use App\Http\Controllers\persons\CaptainController;
 use App\Http\Controllers\persons\OwnerController;
 use App\Http\Controllers\persons\PersonController;
 use App\Http\Controllers\users\UserController;
+use App\Http\Middleware\UserExists;
 use Illuminate\Support\Facades\Route;
 
 
-
-Route::get('/users/{userName}', [UserController::class, 'show']);
-Route::patch('/users/{userName}', [UserController::class, 'update']);
-Route::delete('/users/{userName}', [UserController::class, 'destroy']);
 Route::post('/users', [UserController::class, 'store']);
+Route::get('/users/{id}', [UserController::class, 'show'])->middleware(UserExists::class);
+Route::patch('/users/{id}', [UserController::class, 'update'])->middleware(UserExists::class);
+Route::delete('/users/{id}', [UserController::class, 'destroy'])->middleware(UserExists::class);
+
 
 
 Route::get('/boats/{userName}',[BoatController::class,'index']);

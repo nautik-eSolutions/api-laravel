@@ -5,11 +5,19 @@ namespace App\Http\Controllers\users;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UserPostRequest;
 use App\Models\users\User;
+use App\Services\UserService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
 {
+
+    private UserService $userService;
+
+    public function __construct()
+    {
+        $this->userService = new UserService();
+    }
 
     public function index()
     {
@@ -20,7 +28,7 @@ class UserController extends Controller
 
     public function store(UserPostRequest $request){
 
-
+        /*
         $user = User::create([
             'first_name' => $request->firstName,
             'last_name' => $request->lastName,
@@ -28,23 +36,16 @@ class UserController extends Controller
             'email' => $request->email,
             'password' => $request->password
         ]);
-
+        */
+        $user = $this->userService->store($request);
         return response()->json($user, 201);
     }
 
 
-    public function show(string $userName)
+    public function show(int $id)
     {
-        $user = User::where('user_name', $userName)->get();
-        if (!$user) {
-            $data = [
-                'message' => "User not found",
-                'status' => 404
-            ];
+        $user = $this->userService->show($id);
 
-            return response()->json($data, 404);
-
-        }
         return response()->json($user, 200);
     }
 
