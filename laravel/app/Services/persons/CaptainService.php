@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services;
+namespace App\Services\persons;
 
 use App\Models\persons\Captain;
 
@@ -12,7 +12,6 @@ class CaptainService
 
     public function index()
     {
-        return Captain::all();
     }
 
     public function show($captainId)

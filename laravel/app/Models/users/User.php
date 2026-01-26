@@ -47,7 +47,7 @@ class User extends Authenticatable
 
     public function owners(): BelongsToMany
     {
-        return $this->belongsToMany(Owner::class,'user_captain');
+        return $this->belongsToMany(Owner::class,'user_owner');
     }
 
 }

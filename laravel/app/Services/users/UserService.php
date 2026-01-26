@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Services;
+namespace App\Services\users;
 
-use App\Http\Requests\UserPatchRequest;
-use App\Http\Requests\UserPostRequest;
+use App\Http\Requests\users\UserPatchRequest;
+use App\Http\Requests\users\UserPostRequest;
 use App\Models\users\User;
 use App\Repositories\UserRepository;
 

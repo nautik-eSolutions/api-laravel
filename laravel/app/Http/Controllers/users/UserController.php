@@ -3,12 +3,10 @@
 namespace App\Http\Controllers\users;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\UserPatchRequest;
-use App\Http\Requests\UserPostRequest;
+use App\Http\Requests\users\UserPatchRequest;
+use App\Http\Requests\users\UserPostRequest;
 use App\Models\users\User;
-use App\Services\UserService;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
+use App\Services\users\UserService;
 
 class UserController extends Controller
 {

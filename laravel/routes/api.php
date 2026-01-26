@@ -5,7 +5,7 @@ use App\Http\Controllers\persons\CaptainController;
 use App\Http\Controllers\persons\OwnerController;
 use App\Http\Controllers\persons\PersonController;
 use App\Http\Controllers\users\UserController;
-use App\Http\Middleware\UserExists;
+use App\Http\Middleware\users\UserExists;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/users', [UserController::class, 'index']);

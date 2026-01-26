@@ -1,14 +1,13 @@
 <?php
 
-namespace App\Http\Middleware;
+namespace App\Http\Middleware\persons;
 
-use App\Repositories\UserRepository;
-use App\Services\UserService;
+use App\Services\users\UserService;
 use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class UserExists
+class OwnerExists
 {
     /**
      * Handle an incoming request.
@@ -28,7 +27,7 @@ class UserExists
 
         if (!$this->userService->show($id)){
             $data = [
-                'message'=>"User not found",
+                'message'=>"Captain was not found",
                 'status'=>404
             ];
             return response()->json($data,404);
