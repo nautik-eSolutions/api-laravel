@@ -7,7 +7,7 @@ use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
-class UserPostRequest extends FormRequest
+class UserPatchRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -21,11 +21,11 @@ class UserPostRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "first_name"=>'required|max:20|min:2',
-            "last_name"=>'required|max:20|min:2',
-            "user_name"=>'required|max:20|min:2',
-            "email"=>'required|email',
-            "password"=>'required|min:8'
+            "first_name"=>'max:20|min:2',
+            "last_name"=>'max:20|min:2',
+            "user_name"=>'max:20|min:2',
+            "email"=>'email',
+            "password"=>'min:8'
         ];
     }
     protected function failedValidation(Validator $validator)

@@ -20,9 +20,11 @@ class UserRepository implements UserInterface
 
     }
 
-    public function update(User $user)
+    public function update( $params,$id)
     {
-        return $user->saveOrFail();
+        $user =  $this->show($id);
+
+        return $user->updateOrFail($params);
 
     }
 

@@ -8,7 +8,7 @@ use App\Http\Controllers\users\UserController;
 use App\Http\Middleware\UserExists;
 use Illuminate\Support\Facades\Route;
 
-
+Route::get('/users', [UserController::class, 'index']);
 Route::post('/users', [UserController::class, 'store']);
 Route::get('/users/{id}', [UserController::class, 'show'])->middleware(UserExists::class);
 Route::patch('/users/{id}', [UserController::class, 'update'])->middleware(UserExists::class);
