@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Repositories;
+namespace App\Repositories\users;
 
-use App\Interfaces\UserInterface;
+use App\Interfaces\users\UserInterface;
 use App\Models\users\User;
 
 class UserRepository implements UserInterface

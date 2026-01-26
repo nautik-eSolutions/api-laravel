@@ -6,12 +6,14 @@ use App\Models\persons\Captain;
 
 class CaptainService
 {
+
     public function __construct()
     {
     }
 
-    public function index()
+    public function indexByUser($userId)
     {
+
     }
 
     public function show($captainId)

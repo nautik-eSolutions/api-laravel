@@ -5,7 +5,7 @@ namespace App\Services\users;
 use App\Http\Requests\users\UserPatchRequest;
 use App\Http\Requests\users\UserPostRequest;
 use App\Models\users\User;
-use App\Repositories\UserRepository;
+use App\Repositories\users\UserRepository;
 
 class UserService
 {
@@ -26,9 +26,9 @@ class UserService
         $params = $request->request->all();
 
         $params['password'] = bcrypt($params['password']);
-
-        return new User($params);
-
+        $user = new User($params);
+        $this->repository->store($user);
+        return $this->responseMessage('user',$user,201);
     }
 
     public function update(UserPatchRequest $request, $id){
