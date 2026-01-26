@@ -38,3 +38,6 @@ Route::post('/persons', [PersonController::class, 'store']);
 Route::patch('/persons/{personId}', [PersonController::class, 'update']);
 Route::get('/persons/{personId}', [PersonController::class, 'show']);
 Route::delete('/persons/{personId}', [PersonController::class, 'destroy']);
+
+Route::get('/cities');
+

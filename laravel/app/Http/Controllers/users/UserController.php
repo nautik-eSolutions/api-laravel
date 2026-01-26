@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\users;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\UserPostRequest;
 use App\Models\users\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -17,8 +18,9 @@ class UserController extends Controller
     }
 
 
-    public function store(Request $request)
+    public function store(UserPostRequest $request)
     {
+        /*
         $validator = Validator::make($request->all(), [
             "firstName"=>'required',
             "lastName"=>'required',
@@ -34,7 +36,7 @@ class UserController extends Controller
                 'status'=>400
             ];
             return response()->json($data,400);
-        }
+        }*/
         $user = User::create([
             'first_name' => $request->firstName,
             'last_name' => $request->lastName,
