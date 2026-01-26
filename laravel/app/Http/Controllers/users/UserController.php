@@ -100,7 +100,7 @@ class UserController extends Controller
         $user->password = $request->password;
 
         $user->save();
-
+        ;
 
         $data = [
             'user'=>$user,
