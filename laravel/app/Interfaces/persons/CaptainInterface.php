@@ -8,7 +8,7 @@ interface CaptainInterface
 
     public function show($id);
 
-    public function store($params, $userid);
+    public function store($params,$personId, $userId);
 
     public function update($params, $id);
 

@@ -3,27 +3,35 @@
 namespace App\Repositories\persons;
 
 use App\Interfaces\persons\PersonInterface;
+use App\Models\persons\Person;
 
 class PersonsRepository implements PersonInterface
 {
 
-    public function store($params)
+    public function store(Person $person) : bool
     {
+       return  $person->saveOrFail();
 
     }
 
-    public function update($params, $id)
+    public function update($params, $id): bool
     {
-        // TODO: Implement update() method.
+        $person = $this->show($id);
+
+        return $person->updateOrFail($params);
     }
 
-    public function show($id)
+    public function show($id):Person
     {
-        // TODO: Implement show() method.
+        return Person::find($id);
     }
 
-    public function delete($id)
+    public function delete($id): bool
     {
-        // TODO: Implement delete() method.
+        $person = $this->show($id);
+
+        return $person->deleteOrFail();
+
+
     }
 }

@@ -2,10 +2,12 @@
 
 namespace App\Interfaces\persons;
 
+use App\Models\persons\Person;
+
 interface PersonInterface
 {
 
-    public function  store($params);
+    public function  store(Person $person);
 
     public function update($params, $id);
 
