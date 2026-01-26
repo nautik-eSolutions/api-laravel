@@ -18,25 +18,9 @@ class UserController extends Controller
     }
 
 
-    public function store(UserPostRequest $request)
-    {
-        /*
-        $validator = Validator::make($request->all(), [
-            "firstName"=>'required',
-            "lastName"=>'required',
-            "userName"=>'required',
-            "email"=>'required|email',
-            "password"=>'required'
-        ]);
+    public function store(UserPostRequest $request){
 
-        if ($validator->fails()){
-            $data = [
-                'message'=>'Error in data validation',
-                'errors'=>$validator->errors(),
-                'status'=>400
-            ];
-            return response()->json($data,400);
-        }*/
+
         $user = User::create([
             'first_name' => $request->firstName,
             'last_name' => $request->lastName,
