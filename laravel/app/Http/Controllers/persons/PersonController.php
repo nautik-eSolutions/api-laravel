@@ -27,7 +27,7 @@ class PersonController extends Controller
     {
         $validator = Validator::make($request->all(),[
             'firstName' => ['required'],
-            'lastname' => ['required'],
+            'lastName' => ['required'],
             'identificationDocument' => ['required'],
             'birthDate' => ['required', 'date'],
             'identificationDocumentType'=>['required',Rule::in('DNI','NIE','Passaporte')]
@@ -41,11 +41,11 @@ class PersonController extends Controller
             return response()->json($data,400);
         }
         $user = Person::create([
-            'first_name' => $request->firsName,
+            'first_name' => $request->firstName,
             'last_name' => $request->lastName,
             'identification_document' => $request->identificationDocument,
             'birth_date' => $request->birthDate,
-            'identification_document_type'=>$request->identifactionDocumentType
+            'identification_document_type'=>$request->identificationDocumentType
         ]);
 
         return response()->json($user,201);

@@ -76,7 +76,8 @@ class BoatController extends Controller
         $savedBoat = $user->boats()->save($boat);
 
 
-        return response()->json($savedBoat, 201);
+
+        return response()->json($boat, 201);
 
     }
 
