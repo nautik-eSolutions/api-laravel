@@ -28,7 +28,22 @@ class PersonController extends Controller
 
         $message = $this->setMessage('person',$person);
 
-        return $this->response($message);
+        return $this->response($message,200);
+    }
+
+    public function showCaptainsByUser($userId){
+        $captains = $this->personService->showCaptainsByUser($userId);
+
+        $message = $this->setMessage('captains',$captains);
+
+        return $this->response($message,200);
+    }
+    public function showOwnersByUser($userId){
+        $owners = $this->personService->showCaptainsByUser($userId);
+
+        $message = $this->setMessage('owners',$owners);
+
+        return $this->response($message,200);
     }
 
     public function storeCaptain(PersonCaptainPostRequest $request, int $userId)
