@@ -5,7 +5,7 @@ namespace App\Repositories\persons;
 use App\Interfaces\persons\PersonInterface;
 use App\Models\persons\Person;
 
-class PersonsRepository implements PersonInterface
+class PersonRepository implements PersonInterface
 {
 
     public function store(Person $person) : bool
