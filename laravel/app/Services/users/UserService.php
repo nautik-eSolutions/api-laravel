@@ -54,7 +54,7 @@ class UserService
         }
     }
 
-    public function saveEntity($entity, $userId) : bool
+    public function saveEntity($entity, $userId):bool
     {
         $user = $this->show($userId);
 

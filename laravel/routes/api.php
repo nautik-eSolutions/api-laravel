@@ -5,7 +5,6 @@ use App\Http\Controllers\persons\CaptainController;
 use App\Http\Controllers\persons\OwnerController;
 use App\Http\Controllers\persons\PersonController;
 use App\Http\Controllers\users\UserController;
-use App\Http\Middleware\persons\PersonExists;
 use App\Http\Middleware\users\UserExists;
 use Illuminate\Support\Facades\Route;
 
@@ -38,10 +37,10 @@ Route::patch('/owners/{ownerId}');
 Route::delete('/owners/{ownerId}', [OwnerController::class, 'destroy']);
 
 Route::get('/persons', [PersonController::class, 'index']);
-Route::post('/persons/{userId}', [PersonController::class, 'store'])->middleware(UserExists::class);
-Route::patch('/persons/{personId}', [PersonController::class, 'update'])->middleware(PersonExists::class);
-Route::get('/persons/{personId}', [PersonController::class, 'show'])->middleware(PersonExists::class);
-Route::delete('/persons/{personId}', [PersonController::class, 'destroy'])->middleware(PersonExists::class);
+Route::post('/persons', [PersonController::class, 'store']);
+Route::patch('/persons/{personId}', [PersonController::class, 'update']);
+Route::get('/persons/{personId}', [PersonController::class, 'show']);
+Route::delete('/persons/{personId}', [PersonController::class, 'destroy']);
 
 Route::get('/cities');
 
