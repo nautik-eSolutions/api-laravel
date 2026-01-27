@@ -13,11 +13,12 @@ class BoatPatchRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "first_name"=>'max:20|min:2',
-            "last_name"=>'max:20|min:2',
-            "identification_document"=>'max:20|min:2',
-            "birth_date"=>'date',
-            "identification_document_type"=>[Rule::in('DNI','NIE','Passaporte')]
+            "name" => 'max:20',
+            "registry_number" => 'max:10',
+            "length" => 'max:3|min:0',
+            "beam" => 'max:3|min:1',
+            "draft" => 'max:3|min:1',
+            "boat_type" => [Rule::in("motor", "vela")]
         ];
     }
     protected function failedValidation(Validator $validator)
