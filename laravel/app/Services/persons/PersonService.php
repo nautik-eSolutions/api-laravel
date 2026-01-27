@@ -30,14 +30,14 @@ class PersonService
     {
        $user =  User::find($userId);
 
-        return $user->where('is_captain','=',true)->get();
+        return $user->persons()->where('is_captain','=',true)->get();
     }
 
     public function showOwnersByUser($userId)
     {
         $user = User::find($userId);
 
-        return $user->where('is_owner','=',true)->get();
+        return $user->persons()->where('is_owner','=',true)->get();
 
     }
 
