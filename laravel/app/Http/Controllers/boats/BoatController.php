@@ -5,15 +5,7 @@ namespace App\Http\Controllers\boats;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\boats\BoatPatchRequest;
 use App\Http\Requests\boats\BoatPostRequest;
-use App\Models\boats\Boat;
-use App\Models\boats\BoatType;
-use App\Models\users\User;
 use App\Services\boats\BoatService;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Validation\Rule;
-use function Pest\Laravel\json;
 
 class BoatController extends Controller
 {
