@@ -14,6 +14,12 @@ Route::get('/users/{userId}', [UserController::class, 'show'])->middleware(UserE
 Route::patch('/users/{userId}', [UserController::class, 'update'])->middleware(UserExists::class);
 Route::delete('/users/{userId}', [UserController::class, 'destroy'])->middleware(UserExists::class);
 
+
+Route::get('/users/{userId}/captains',[PersonController::class,'showCaptainsByUser'])->middleware(UserExists::class);
+Route::get('/users/{userId}/owners',[PersonController::class,'showCaptainsByUser'])->middleware(UserExists::class);
+Route::get('/users/{userId}/captains/{id}',[PersonController::class,'show'])->middleware(UserExists::class);
+Route::get('/users/{userId}/owners/{id}',[PersonController::class,'show'])->middleware(UserExists::class);
+
 Route::post('/users/{userId}/captains',[PersonController::class,'storeCaptain'])->middleware(UserExists::class);
 Route::post('/users/{userId}/owners',[PersonController::class,'storeOwner'])->middleware(UserExists::class);
 Route::patch('/users/{userId}/captains/{captainId}',[PersonController::class,'updateCaptain'])->middleware(UserExists::class);
