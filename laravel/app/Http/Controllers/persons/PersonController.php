@@ -5,7 +5,7 @@ namespace App\Http\Controllers\persons;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\persons\PersonCaptainPatchRequest;
 use App\Http\Requests\persons\PersonCaptainPostRequest;
-use App\Http\Requests\persons\BoatPostRequest;
+use App\Http\Requests\boats\BoatPostRequest;
 use App\Services\persons\PersonService;
 
 class PersonController extends Controller
@@ -39,6 +39,7 @@ class PersonController extends Controller
         return $this->response($message,200);
     }
     public function showOwnersByUser($userId){
+
         $owners = $this->personService->showCaptainsByUser($userId);
 
         $message = $this->setMessage('owners',$owners);
@@ -76,12 +77,14 @@ class PersonController extends Controller
     }
 
     public function destroyCaptain($userId, $captainId){
+
         $message = $this->personService->destroyCaptain($captainId,$userId);
 
         return $this->response($message,204);
     }
 
     public function destroyOwner($userId,$ownerId){
+
         $message =  $this->personService->destroyOwner($ownerId,$userId);
 
         return $this->response($message,204);

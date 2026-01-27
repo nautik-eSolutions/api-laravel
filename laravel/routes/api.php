@@ -31,9 +31,10 @@ Route::delete('/users/{userId}/owners/{ownerId}',[PersonController::class,'destr
 
 Route::get('/owners/{ownerId}/boats',[BoatController::class,'indexByOwner']);
 Route::get('/users/{userId}/boats',[BoatController::class,'indexByUser']);
+Route::get('/boats/{id}',[BoatController::class,'show']);
+Route::post('/boats/{ownerId}',[BoatController::class,'store']);
+Route::patch('/boats/{boatId}',[BoatController::class,'update']);
+Route::delete('/boats/{boatId}',[BoatController::class,'destroy']);
 
-Route::get('/boats/{userName}/{boatName}',[BoatController::class,'show']);
-Route::post('/boats/{userName}',[BoatController::class,'store']);
-Route::patch('/boats/{userName}/{boatName}',[BoatController::class,'update']);
-Route::delete('/boats/{userName}/{boatName}',[BoatController::class,'destroy']);
+
 

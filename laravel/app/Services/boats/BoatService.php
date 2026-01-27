@@ -2,14 +2,11 @@
 
 namespace App\Services\boats;
 
-use App\Http\Requests\persons\BoatPostRequest;
 use App\Models\boats\Boat;
 use App\Models\boats\BoatType;
 use App\Models\persons\Person;
 use App\Models\users\User;
-use App\Repositories\boats\BoatRepository;
-use App\Repositories\persons\PersonRepository;
-use App\Repositories\users\UserRepository;
+use Dflydev\DotAccessData\Data;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -33,12 +30,15 @@ class BoatService
     public function store($params, int $ownerId){
 
         $boat = new Boat($params);
-        $boat_type = BoatType::where('name', $params->boat_type)->first();
+
+        $boat_type = BoatType::where('name', $params['boat_type'])->first();
+
         $owner = Person::find($ownerId);
 
         $boat->boatType()->associate($boat_type);
 
-        return $owner->save($boat);
+
+        return $owner->boats()->save($boat);
 
     }
 

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\boats;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\boats\BoatPatchRequest;
+use App\Http\Requests\boats\BoatPostRequest;
 use App\Models\boats\Boat;
 use App\Models\boats\BoatType;
 use App\Models\users\User;
@@ -37,7 +39,7 @@ class BoatController extends Controller
     }
 
 
-    public function store(Request $request, int $ownerId)
+    public function store(BoatPostRequest $request, int $ownerId)
     {
         $params = $request->request->all();
 
@@ -59,7 +61,7 @@ class BoatController extends Controller
     }
 
 
-    public function update(Request $request,$id)
+    public function update(BoatPatchRequest $request,$id)
     {
         $params = $request->request->all();
 
