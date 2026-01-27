@@ -27,6 +27,7 @@ services:
       echo 'Include conf/extra/000-default.conf' >> /usr/local/apache2/conf/httpd.conf &&
       httpd-foreground
       "
+      
 
     networks:
       - laravel
