@@ -5,8 +5,7 @@ namespace App\Services\persons;
 use App\Models\persons\Person;
 use App\Repositories\persons\PersonRepository;
 use App\Repositories\users\UserRepository;
-use App\Services\users\UserService;
-use phpDocumentor\Reflection\DocBlock\Tags\Uses;
+
 
 class PersonService
 {
@@ -24,6 +23,19 @@ class PersonService
     public function show($id): Person
     {
         return $this->personRepository->show($id);
+    }
+
+    public function showCaptainsByUser($userId)
+    {
+
+        $user = $this->userRepository->show($userId);
+        return $this->personRepository->showCaptainsByUser($user);
+    }
+
+    public function showOwnersByUser($userId)
+    {
+        $user = $this->userRepository->show($userId);
+        return $this->personRepository->showOwnersByUser($user);
     }
 
     public function storeCaptain($params, $userId)
@@ -52,11 +64,12 @@ class PersonService
         $captain = $this->personRepository->show($captainId);
         $user = $this->userRepository->show($userId);
 
-        return $this->personRepository->destroyCaptain($captain,$user);
+        return $this->personRepository->destroyCaptain($captain, $user);
 
     }
 
-    public function storeOwner($params, $userId){
+    public function storeOwner($params, $userId)
+    {
         $params['is_owner'] = true;
 
         $user = $this->userRepository->show($userId);
@@ -71,10 +84,9 @@ class PersonService
         $owner = $this->personRepository->show($ownerId);
         $user = $this->userRepository->show($userId);
 
-        return $this->personRepository->destroyOwner($owner,$user);
+        return $this->personRepository->destroyOwner($owner, $user);
 
     }
-
 
 
 }

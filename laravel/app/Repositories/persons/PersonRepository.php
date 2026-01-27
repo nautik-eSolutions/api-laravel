@@ -11,15 +11,21 @@ class PersonRepository implements PersonInterface
     public function show($id){
        return  Person::find($id);
     }
-
-    public function showCaptainsByUser($userId)
+    public function showCaptainsByUser(User $user)
     {
-
+        return $user->persons()->where('is_captain','=',true);
     }
+
+    public function showOwnersByUser(User $user)
+    {
+        return $user->persons()->where('is_owner','=',true);
+    }
+
     public function storeCaptain(Person $person,User $user)
     {
         return $user->persons()->save($person);
     }
+
 
     public function storeOwner(Person $person, User $user)
     {
