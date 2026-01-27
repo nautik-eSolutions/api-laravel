@@ -5,41 +5,36 @@ use App\Http\Controllers\persons\CaptainController;
 use App\Http\Controllers\persons\OwnerController;
 use App\Http\Controllers\persons\PersonController;
 use App\Http\Controllers\users\UserController;
+use App\Http\Middleware\users\UserExists;
 use Illuminate\Support\Facades\Route;
 
-
-
-Route::get('/users/{userName}', [UserController::class, 'show']);
-Route::patch('/users/{userName}', [UserController::class, 'update']);
-Route::delete('/users/{userName}', [UserController::class, 'destroy']);
+Route::get('/users', [UserController::class, 'index']);
 Route::post('/users', [UserController::class, 'store']);
+Route::get('/users/{userId}', [UserController::class, 'show'])->middleware(UserExists::class);
+Route::patch('/users/{userId}', [UserController::class, 'update'])->middleware(UserExists::class);
+Route::delete('/users/{userId}', [UserController::class, 'destroy'])->middleware(UserExists::class);
+
+Route::get('/captains/{id}',[PersonController::class,'show']);
+Route::get('/owners/{id}',[PersonController::class,'show']);
+
+Route::get('/users/{userId}/captains',[PersonController::class,'showCaptainsByUser'])->middleware(UserExists::class);
+Route::get('/users/{userId}/owners',[PersonController::class,'showOwnersByUser'])->middleware(UserExists::class);
+Route::get('/users/{userId}/captains/{id}',[PersonController::class,'show'])->middleware(UserExists::class);
+Route::get('/users/{userId}/owners/{id}',[PersonController::class,'show'])->middleware(UserExists::class);
+
+Route::post('/users/{userId}/captains',[PersonController::class,'storeCaptain'])->middleware(UserExists::class);
+Route::post('/users/{userId}/owners',[PersonController::class,'storeOwner'])->middleware(UserExists::class);
+Route::patch('/users/{userId}/captains/{captainId}',[PersonController::class,'updateCaptain'])->middleware(UserExists::class);
+Route::delete('/users/{userId}/captains/{captainId}',[PersonController::class,'destroyCaptain'])->middleware(UserExists::class);
+Route::delete('/users/{userId}/owners/{ownerId}',[PersonController::class,'destroyOwner'])->middleware(UserExists::class);
 
 
-Route::get('/boats/{userName}',[BoatController::class,'index']);
-Route::get('/boats/{userName}/{boatName}',[BoatController::class,'show']);
-Route::post('/boats/{userName}',[BoatController::class,'store']);
-Route::patch('/boats/{userName}/{boatName}',[BoatController::class,'update']);
-Route::delete('/boats/{userName}/{boatName}',[BoatController::class,'destroy']);
+Route::get('/owners/{ownerId}/boats',[BoatController::class,'indexByOwner']);
+Route::get('/users/{userId}/boats',[BoatController::class,'indexByUser']);
+Route::get('/boats/{id}',[BoatController::class,'show']);
+Route::post('/boats/{ownerId}',[BoatController::class,'store']);
+Route::patch('/boats/{boatId}',[BoatController::class,'update']);
+Route::delete('/boats/{boatId}',[BoatController::class,'destroy']);
 
 
-Route::get('/captains');
-Route::post('/captains/{personId}', [CaptainController::class, 'store']);
-Route::get('/captains/{captainId}', [CaptainController::class, 'show']);
-Route::patch('/captains/{captainId}', [CaptainController::class, 'update']);
-Route::delete('/captains/{captainId}', [CaptainController::class, 'destroy']);
-
-
-Route::get('/owners', [OwnerController::class, 'index']);
-Route::get('/owners/{ownerId}', [OwnerController::class, 'show']);
-Route::post('/owners/{personId}', [OwnerController::class, 'store']);
-Route::patch('/owners/{ownerId}');
-Route::delete('/owners/{ownerId}', [OwnerController::class, 'destroy']);
-
-Route::get('/persons', [PersonController::class, 'index']);
-Route::post('/persons', [PersonController::class, 'store']);
-Route::patch('/persons/{personId}', [PersonController::class, 'update']);
-Route::get('/persons/{personId}', [PersonController::class, 'show']);
-Route::delete('/persons/{personId}', [PersonController::class, 'destroy']);
-
-Route::get('/cities');
 

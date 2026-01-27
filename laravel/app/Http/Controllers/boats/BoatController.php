@@ -3,79 +3,47 @@
 namespace App\Http\Controllers\boats;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\boats\BoatPatchRequest;
+use App\Http\Requests\boats\BoatPostRequest;
 use App\Models\boats\Boat;
 use App\Models\boats\BoatType;
 use App\Models\users\User;
+use App\Services\boats\BoatService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
+use function Pest\Laravel\json;
 
 class BoatController extends Controller
 {
 
-    public function index(string $userName)
+    private $boatService;
+
+    public function __construct()
     {
-        $boats = User::where('user_name', $userName)->first()->boats;
+        $this->boatService = new BoatService();
+    }
 
-        if (!$boats) {
-            $data = [
-                'message' => "No boats were found",
-                'status' => 404
-            ];
+    public function indexByOwner($ownerId){
 
-            return response()->json($data, 404);
+        $boats = $this->boatService->showBoatsByOwner($ownerId);
 
-        }
+        return response()->json($boats,200);
+    }
+    public function indexByUser($userId){
 
-        $data = [
-            'boats' => $boats,
-            'status' => 200
-        ];
+        $boats = $this->boatService->showBoatsByUser($userId);
 
-        return response()->json($data, 200);
+        return response()->json($boats,200);
     }
 
 
-    public function store(Request $request, string $userName)
+    public function store(BoatPostRequest $request, int $ownerId)
     {
-        $user = User::where('user_name', $userName)->first();
+        $params = $request->request->all();
 
-        if (!$user) {
-            $data = [
-                'message' => 'User not found',
-                'status' => 404
-            ];
-            return response()->json($data, 404);
-        }
-
-
-        $validator = Validator::make($request->all(), [
-            "name" => 'required',
-            "registry_number" => 'required',
-            "length" => 'required',
-            "beam" => 'required',
-            "draft" => 'required',
-            "boat_type" => ['required', Rule::in("motor", "vela")]
-        ]);
-
-        if ($validator->fails()) {
-            $data = [
-                'message' => 'Error in data validation',
-                'errors' => $validator->errors(),
-                'status' => 400
-            ];
-            return response()->json($data, 400);
-        }
-        $boat_type = BoatType::where('name', $request->boat_type)->get()->get(0);
-        $boat = new Boat($request->request->all());
-
-        $boat->boatType()->associate($boat_type);
-
-
-        $savedBoat = $user->boats()->save($boat);
-
-
+        $boat = $this->boatService->store($params,$ownerId);
 
         return response()->json($boat, 201);
 
@@ -84,105 +52,31 @@ class BoatController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $userName, string $boatName)
+    public function show(int $id)
     {
-        $user = User::where('user_name', $userName)->first();
-
-        if (!$user) {
-            $data = [
-                'message' => 'User not found',
-                'status' => 404
-            ];
-            return response()->json($data, 404);
-        }
-
-
-        $boat = DB::table('boat')
-            ->where('user_id', $user->id)
-            ->where('name', $boatName)->first();
-
-        if (!$boat) {
-            $data = [
-                'message' => 'No boat was found',
-                'status' => 404
-            ];
-
-            return response()->json($data, 404);
-        }
-
+        $boat = $this->boatService->show($id);
 
         return response()->json($boat, 200);
 
     }
 
 
-    public function update(Request $request, string $userName, string $boatName)
+    public function update(BoatPatchRequest $request,$id)
     {
-        $validator = Validator::make($request->all(), [
-            "name" => 'string',
-            "registry_number" => 'string',
-            "length" => 'int',
-            "beam" => 'int',
-            "draft" => 'int',
-            "boat_type" => [Rule::in("motor", "vela")]
-        ]);
+        $params = $request->request->all();
 
-        $user = User::where('user_name', $userName)->first();
+        $boat = $this->boatService->update($params,$id);
 
-
-        if (!$user) {
-            $data = [
-                'message' => 'User not found',
-                'status' => 404
-            ];
-            return response()->json($data, 404);
-        }
-
-        $rawBoat = DB::table('boat')
-            ->where('user_id', $user->id)
-            ->where('name', $boatName)->get();
-
-
-        $boat = Boat::hydrate($rawBoat->all())->first();
-
-        $boatUpdated = $boat->update($request->request->all());
-
-
-        if (!$boatUpdated) {
-            $data = [
-                'message' => 'Was an error while updating your boat',
-                'status' => 400
-            ];
-            return response()->json($data, 400);
-
-        }
-        $data = [
-            'boat' => $boatUpdated,
-            'status' => 200
-        ];
-
-        return response()->json($data, 200);
+        return response()->json($boat, 200);
 
     }
 
-    public function destroy(string $userName, string $boatName)
+    public function destroy(int $boatId)
     {
 
-        $user =  User::where('user_name',$userName)->first();
+        $this->boatService->destroy($boatId);
 
-        $rawBoat = DB::table('boat')
-            ->where('user_id', $user->id)
-            ->where('name', $boatName)->get();
-
-
-        $boat = Boat::hydrate($rawBoat->all())->first();
-        $boat->delete();
-
-
-        return redirect("/api/boats/$userName",302);
-
-
-
-
+        $message = 'Boat was deleted';
+        return response()->json($message,204);
     }
 }

@@ -2,7 +2,11 @@
 
 namespace App\Models\persons;
 
+use App\Models\boats\Boat;
+use App\Models\users\User;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Person extends Model
@@ -16,8 +20,12 @@ class Person extends Model
         'last_name',
         'identification_document',
         'birth_date',
-        'identification_document_type'
+        'identification_document_type',
+        'is_owner',
+        'navigation_license',
+        'is_captain'
     ];
+
 
     protected function casts()
     {
@@ -26,12 +34,15 @@ class Person extends Model
         ];
     }
 
-    public function owner():HasOne
+
+    public function users(): BelongsToMany
     {
-        return $this->hasOne(Owner::class);
+        return $this->belongsToMany(User::class,'user_person');
     }
 
-    public function captain():HasOne{
-        return $this->hasOne(Captain::class);
+    public function boats(): HasMany
+    {
+        return $this->hasMany(Boat::class);
     }
+
 }

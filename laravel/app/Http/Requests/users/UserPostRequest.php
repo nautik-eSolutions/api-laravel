@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\users;
 
 
 use Illuminate\Contracts\Validation\Validator;
@@ -21,11 +21,11 @@ class UserPostRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "firstName"=>'required',
-            "lastName"=>'required',
-            "userName"=>'required',
+            "first_name"=>'required|max:20|min:2',
+            "last_name"=>'required|max:20|min:2',
+            "user_name"=>'required|max:20|min:2',
             "email"=>'required|email',
-            "password"=>'required'
+            "password"=>'required|min:8'
         ];
     }
     protected function failedValidation(Validator $validator)
@@ -38,6 +38,6 @@ class UserPostRequest extends FormRequest
 
             'data'      => $validator->errors()
 
-        ]));
+        ],400));
     }
 }
