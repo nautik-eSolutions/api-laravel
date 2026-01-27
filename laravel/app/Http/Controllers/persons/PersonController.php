@@ -3,36 +3,90 @@
 namespace App\Http\Controllers\persons;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\persons\PersonCaptainPatchRequest;
+use App\Http\Requests\persons\PersonCaptainPostRequest;
+use App\Http\Requests\persons\PersonPostRequest;
+use App\Services\persons\PersonService;
 
 class PersonController extends Controller
 {
 
-    public function index(){
+    private PersonService $personService;
+
+    public function __construct()
+    {
+        $this->personService =  new PersonService();
+    }
+
+    public function index()
+    {
 
     }
 
-    public function store(){
+    public function show($id){
+        $person = $this->personService->show($id);
 
-    }
-    public function update(){
+        $message = $this->setMessage('person',$person);
 
-    }
-    public function delete(){
-
+        return $this->response($message);
     }
 
-    public function setCaptain(){
+    public function storeCaptain(PersonCaptainPostRequest $request, int $userId)
+    {
+        $params = $request->request->all();
+
+        $captain =  $this->personService->storeCaptain($params,$userId);
+
+        $message = $this->setMessage('captain',$captain);
+
+        return $this->response($message,201);
+    }
+    public function storeOwner(PersonPostRequest $request, int $userId){
+        $params = $request->request->all();
+
+        $captain =  $this->personService->storeOwner($params,$userId);
+
+        $message = $this->setMessage('owner',$captain);
+
+        return $this->response($message,201);
+    }
+
+    public function updateCaptain(PersonCaptainPatchRequest $request, int $captainId)
+    {
+        $params= $request->request->all();
+
+        $message = $this->personService->updateCaptain($params,$captainId);
+
+        return $this->response($message,200);
+    }
+
+    public function destroyCaptain($captainId, $userId){
+        $message = $this->personService->destroyCaptain($captainId,$userId);
+
+        return $this->response($message,204);
+    }
+
+    public function destroyOwner($ownerId,$userId){
+        $message =  $this->personService->destroyOwner($ownerId,$userId);
+
+        return $this->response($message,204);
 
     }
 
-    public function setOwner(){
 
+
+
+    private function response($data, int $status)
+    {
+        return response()->json($data, $status);
     }
 
-    public function unSetCaptain(){
-
+    private function setMessage(string $header,$data){
+        return [
+          '$header'=>$data
+        ];
     }
-    public function unSetOwner(){
 
-    }
+
+
 }

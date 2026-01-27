@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-
+use App\Models\persons\Person;
 class User extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
@@ -39,9 +39,9 @@ class User extends Authenticatable
         return $this->hasMany(Boat::class);
     }
 
-    public function person():BelongsToMany
+    public function persons():BelongsToMany
     {
-        return $this->belongsToMany(Person::class,'person_user');
+        return $this->belongsToMany(Person::class,'user_person');
     }
 
 }

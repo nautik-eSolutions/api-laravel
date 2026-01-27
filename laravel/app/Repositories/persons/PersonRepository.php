@@ -4,61 +4,43 @@ namespace App\Repositories\persons;
 
 use App\Interfaces\persons\PersonInterface;
 use App\Models\persons\Person;
-
+use App\Models\users\User;
 class PersonRepository implements PersonInterface
 {
 
-    public function store(Person $person) : bool
-    {
-       return $person->saveOrFail();
+    public function show($id){
+       return  Person::find($id);
     }
 
-    public function update($params, $id): bool
+    public function showCaptainsByUser($userId)
     {
-        $person = $this->show($id);
-
-        return $person->updateOrFail($params);
-    }
-
-    public function show($id):Person
-    {
-        return Person::find($id);
-    }
-
-    public function delete($id): bool
-    {
-        $person = $this->show($id);
-
-        return $person->deleteOrFail();
-
 
     }
-    public function showByIdentificationDocument($identificationDocument){
-        return Person::where('identification_document',$identificationDocument)->get();
+    public function storeCaptain(Person $person,User $user)
+    {
+        return $user->persons()->save($person);
     }
 
-
-    public function setCaptain(Person $person)
+    public function storeOwner(Person $person, User $user)
     {
-    }
-
-    public function setOwner(Person $person)
-    {
-        // TODO: Implement setOwner() method.
+        return $user->persons()->save($person);
     }
 
     public function updateCaptain(Person $person)
     {
-        // TODO: Implement updateCaptain() method.
+        return $person->update();
     }
 
-    public function unsetCaptain(Person $person)
+    public function destroyCaptain(Person $person, User $user)
     {
-        // TODO: Implement unsetCaptain() method.
+        return $user->persons()->delete($person);
     }
 
-    public function unsetOwner(Person $person)
+    public function destroyOwner(Person $person, User $user)
     {
-        // TODO: Implement unsetOwner() method.
+        return $user->persons()->delete($person);
     }
+
+
+
 }

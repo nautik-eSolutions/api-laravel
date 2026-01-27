@@ -4,18 +4,20 @@ namespace App\Services\persons;
 
 use App\Models\persons\Person;
 use App\Repositories\persons\PersonRepository;
+use App\Repositories\users\UserRepository;
 use App\Services\users\UserService;
+use phpDocumentor\Reflection\DocBlock\Tags\Uses;
 
 class PersonService
 {
 
-    private $personRepository;
-    private $userService;
+    private PersonRepository $personRepository;
+    private UserRepository $userRepository;
 
     public function __construct()
     {
         $this->personRepository = new PersonRepository();
-        $this->userService = new UserService();
+        $this->userRepository = new UserRepository();
     }
 
 
@@ -24,30 +26,55 @@ class PersonService
         return $this->personRepository->show($id);
     }
 
-    public function storeCaptain($params, $userId):Person
+    public function storeCaptain($params, $userId)
     {
+        $params['is_captain'] = true;
+
+        $user = $this->userRepository->show($userId);
+
         $person = new Person($params);
 
-        $this->userService->show($userId)->save($person);
-
+        return $this->personRepository->storeCaptain($person, $user);
     }
 
-    public function update($params, $id)
+    public function updateCaptain($params, $captainId)
     {
+        $captain = $this->personRepository->show($captainId);
+
+        $captain->navigation_license = $params['navigation_license'];
+
+        return $this->personRepository->updateCaptain($captain);
 
     }
 
-    public function delete($id)
+    public function destroyCaptain($captainId, $userId)
     {
+        $captain = $this->personRepository->show($captainId);
+        $user = $this->userRepository->show($userId);
+
+        return $this->personRepository->destroyCaptain($captain,$user);
 
     }
 
-    private function responseMessage($name, $object, int $status = 200)
+    public function storeOwner($params, $userId){
+        $params['is_owner'] = true;
+
+        $user = $this->userRepository->show($userId);
+
+        $person = new Person($params);
+
+        return $this->personRepository->storeCaptain($person, $user);
+    }
+
+    public function destroyOwner($ownerId, $userId)
     {
-        return [
-            $name => $object,
-            'status' => $status
-        ];
+        $owner = $this->personRepository->show($ownerId);
+        $user = $this->userRepository->show($userId);
+
+        return $this->personRepository->destroyOwner($owner,$user);
+
     }
+
+
 
 }

@@ -34,7 +34,7 @@ class Person extends Model
 
     public function users(): BelongsToMany
     {
-        return $this->belongsToMany(User::class,'person_user');
+        return $this->belongsToMany(User::class,'user_person');
     }
 
 }
