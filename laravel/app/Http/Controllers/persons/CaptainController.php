@@ -36,10 +36,7 @@ class CaptainController extends Controller
 
     public function store(Request $request, String $personId)
     {
-        $data = [
-            'captain'=>$captain,
-            'status'=>201
-        ];
+
 
         return response()->json($data,201);
 

@@ -54,21 +54,7 @@ class UserService
         }
     }
 
-    public function saveEntity($entity, $userId) : bool
-    {
-        $user = $this->show($userId);
 
-
-        try {
-
-
-        }catch (Throwable){
-
-            return false;
-        }
-
-        return true;
-    }
 
 
 

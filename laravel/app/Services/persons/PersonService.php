@@ -27,11 +27,12 @@ class PersonService
         return $person;
     }
 
-    public function store($params, $userId): false | Person
+    public function store($params): false | Person
     {
         $person =  new Person($params);
 
-        return $this->userService->saveEntity($person,$userId) ? $person : false;
+        return $this->personRepository->store($person);
+
     }
 
     public function update($params, $id)

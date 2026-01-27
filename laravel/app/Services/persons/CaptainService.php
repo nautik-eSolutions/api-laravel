@@ -18,7 +18,7 @@ class CaptainService
 
     public function show($captainId)
     {
-        return Captain::find($captainId);
+
     }
 
     public function store($data){
