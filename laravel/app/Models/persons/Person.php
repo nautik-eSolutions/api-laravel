@@ -2,7 +2,9 @@
 
 namespace App\Models\persons;
 
+use App\Models\users\User;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Person extends Model
@@ -27,6 +29,12 @@ class Person extends Model
         return [
             'birth_date' => 'date',
         ];
+    }
+
+
+    public function users(): BelongsToMany
+    {
+        return $this->belongsToMany(User::class,'person_user');
     }
 
 }

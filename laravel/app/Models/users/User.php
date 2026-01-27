@@ -4,8 +4,7 @@ namespace App\Models\users;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use App\Models\boats\Boat;
-use App\Models\persons\Captain;
-use App\Models\persons\Owner;
+
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -40,14 +39,9 @@ class User extends Authenticatable
         return $this->hasMany(Boat::class);
     }
 
-    public function captains(): BelongsToMany
+    public function person():BelongsToMany
     {
-        return $this->belongsToMany(Captain::class, 'user_captain');
-    }
-
-    public function owners(): BelongsToMany
-    {
-        return $this->belongsToMany(Owner::class,'user_owner');
+        return $this->belongsToMany(Person::class,'person_user');
     }
 
 }

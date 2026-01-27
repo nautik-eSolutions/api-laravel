@@ -21,29 +21,15 @@ class PersonService
 
     public function show($id): Person
     {
-        $person = $this->personRepository->show($id);
-
-
-        return $person;
+        return $this->personRepository->show($id);
     }
 
-<<<<<<< HEAD
-    public function store($params, $userId):Person
-=======
-    public function store($params): false | Person
->>>>>>> 8f1460ff86b834de9b6ebba4f29d5500bdc966ae
+    public function storeCaptain($params, $userId):Person
     {
-        $user = $this->userService->show($userId);
-
         $person = new Person($params);
 
+        $this->userService->show($userId)->save($person);
 
-
-<<<<<<< HEAD
-=======
-        return $this->personRepository->store($person);
-
->>>>>>> 8f1460ff86b834de9b6ebba4f29d5500bdc966ae
     }
 
     public function update($params, $id)

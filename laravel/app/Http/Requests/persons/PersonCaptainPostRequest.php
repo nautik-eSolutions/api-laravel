@@ -7,18 +7,18 @@ use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Validation\Rule;
 
-class CaptainPatchRequest extends FormRequest
+class PersonCaptainPostRequest extends FormRequest
 {
 
     public function rules(): array
     {
         return [
-            "first_name"=>'max:20|min:2',
-            "last_name"=>'max:20|min:2',
-            "identification_document"=>'max:20|min:2',
-            "birth_date"=>'date',
-            "identification_document_type"=>[Rule::in('DNI','NIE','Passaporte')],
-            "navigation_license"=>'min:2'
+            "first_name"=>'required|max:20|min:2',
+            "last_name"=>'required|max:20|min:2',
+            "identification_document"=>'required|max:20|min:2',
+            "birth_date"=>'required|date',
+            "identification_document_type"=>'required',[Rule::in('DNI','NIE','Passaporte')],
+            "navigation_license"=>'required|min:2'
         ];
     }
     protected function failedValidation(Validator $validator)
