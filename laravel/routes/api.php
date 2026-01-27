@@ -29,7 +29,9 @@ Route::delete('/users/{userId}/captains/{captainId}',[PersonController::class,'d
 Route::delete('/users/{userId}/owners/{ownerId}',[PersonController::class,'destroyOwner'])->middleware(UserExists::class);
 
 
-Route::get('/boats/{userName}',[BoatController::class,'index']);
+Route::get('/owners/{ownerId}/boats',[BoatController::class,'indexByOwner']);
+Route::get('/users/{userId}/boats',[BoatController::class,'indexByUser']);
+
 Route::get('/boats/{userName}/{boatName}',[BoatController::class,'show']);
 Route::post('/boats/{userName}',[BoatController::class,'store']);
 Route::patch('/boats/{userName}/{boatName}',[BoatController::class,'update']);

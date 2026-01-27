@@ -27,5 +27,13 @@ class BoatService
         return $boats;
 
     }
+    public function showBoatsByUser($userId){
+        $user = $this->userRepository->show($userId);
+
+        $boats = $this->boatRepository->showBoatsByUser($user);
+
+        return $boats;
+
+    }
 
 }

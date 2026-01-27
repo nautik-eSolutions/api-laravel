@@ -50,6 +50,11 @@ class BoatController extends Controller
 
         return response()->json($boats,200);
     }
+    public function indexByUser($userId){
+        $boats = $this->boatService->showBoatsByUser($userId);
+
+        return response()->json($boats,200);
+    }
 
 
     public function store(Request $request, string $userName)

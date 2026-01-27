@@ -13,7 +13,7 @@ class BoatRepository implements BoatsInterface
 
     public function showBoatsByOwner(Person $owner)
     {
-        $result = DB::table('boats')
+        $result = DB::table('boat')
             ->where('person_id','=',$owner->id)->get();
 
         return $result;
@@ -21,7 +21,12 @@ class BoatRepository implements BoatsInterface
 
     public function showBoatsByUser(User $user)
     {
-        // TODO: Implement showBoatsByUser() method.
+        $result = DB::table('boat')
+            ->join('user_person','user_person.person_id','=','boat.person_id')
+            ->join('user','user_id','=','user_person.user_id')
+            ->get();
+
+        return $result;
     }
 
     public function show($id)
