@@ -27,24 +27,21 @@ class PersonService
         return $person;
     }
 
-    public function store($params, $userId):Person
+    public function store($params, $userId): false | Person
     {
-        $user = $this->userService->show($userId);
+        $person =  new Person($params);
 
-        $person = new Person($params);
-
-
-
+        return $this->userService->saveEntity($person,$userId) ? $person : false;
     }
 
     public function update($params, $id)
     {
-
+        return $this->personRepository->update($params,$id);
     }
 
     public function delete($id)
     {
-
+        return $this->personRepository->delete($id);
     }
 
     private function responseMessage($name, $object, int $status = 200)

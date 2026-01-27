@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware\persons;
 
+use App\Services\persons\PersonService;
 use App\Services\users\UserService;
 use Closure;
 use Illuminate\Http\Request;
@@ -15,19 +16,19 @@ class PersonExists
      * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
      */
 
-    private $userService;
+    private PersonService $personService;
     public function __construct()
     {
-        $this->userService = new UserService();
+        $this->personService = new PersonService();
     }
 
     public function handle(Request $request, Closure $next): Response
     {
-        $id = $request->route()->parameter('id');
+        $id = $request->route()->parameter('personId');
 
-        if (!$this->userService->show($id)){
+        if (!$this->personService->show($id)){
             $data = [
-                'message'=>"Captain was not found",
+                'message'=>"No person was found",
                 'status'=>404
             ];
             return response()->json($data,404);

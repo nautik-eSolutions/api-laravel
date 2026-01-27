@@ -3,122 +3,73 @@
 namespace App\Http\Controllers\persons;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\persons\PersonPostRequest;
 use App\Models\persons\Person;
+use App\Services\persons\PersonService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 
 class PersonController extends Controller
 {
+    private $personService;
+
+    public function __construct()
+    {
+        $this->personService = new PersonService();
+    }
+
     public function index()
     {
         $persons = Person::all();
 
         $data = [
-            'users'=>$persons,
-            'status'=>200
+            'users' => $persons,
+            'status' => 200
         ];
 
-        return response()->json($data,200);
+        return response()->json($data, 200);
 
     }
 
-    public function store(Request $request)
+    public function store(PersonPostRequest $request, $userId)
     {
-        $validator = Validator::make($request->all(),[
-            'firstName' => ['required'],
-            'lastName' => ['required'],
-            'identificationDocument' => ['required'],
-            'birthDate' => ['required', 'date'],
-            'identificationDocumentType'=>['required',Rule::in('DNI','NIE','Passaporte')]
-        ]);
-        if ($validator->fails()){
-            $data = [
-                'message'=>'Error in data validation',
-                'errors'=>$validator->errors(),
-                'status'=>400
-            ];
-            return response()->json($data,400);
-        }
-        $user = Person::create([
-            'first_name' => $request->firstName,
-            'last_name' => $request->lastName,
-            'identification_document' => $request->identificationDocument,
-            'birth_date' => $request->birthDate,
-            'identification_document_type'=>$request->identificationDocumentType
-        ]);
+        $person = $this->personService->store($request, $userId);
 
-        return response()->json($user,201);
+        return response()->json($person, 201);
 
     }
 
-    public function show(String $personId)
+    public function show(string $personId)
     {
-        $person = Person::find($personId);
+        $person = $this->personService->show($personId);
 
-        if (!$person) {
-            $data = [
-                'message' => "Person not found",
-                'status' => 404
-            ];
-            return response()->json($data, 404);
-        }
         return response()->json($person, 200);
     }
 
-    public function update(Request $request, String $personId)
+    public function update(Request $request, string $personId)
     {
-        $validator = Validator::make($request->all(),[
-            'first_name' => ['required'],
-            'last_name' => ['required'],
-            'identification_document' => ['required'],
-            'birth_date' => ['required', 'date'],
-            'identification_document_type'=>['required',Rule::in('DNI','NIE','Passaporte')]
-        ]);
-
-        if ($validator->fails()){
-            $data = [
-                'message'=>'Error in data validation',
-                'errors'=>$validator->errors(),
-                'status'=>400
-            ];
-            return response()->json($data,400);
-        }
-
-        $person = Person::find($personId);
-
-        $person->first_name =  $request->firstName;
-        $person->last_name = $request->lastName;
-        $person->identification_document = $request->identificationDocument;
-        $person->birth_date = $request->birthDate;
-        $person->identification_document_type = $request->identificationDocumentType;
-
-        $person->update($person);
+        $person = $this->update($request,$personId);
 
         $data = [
-            'person'=>$person,
-            'status'=>200
+            'person' => $person,
+            'status' => 200
         ];
 
-        return response()->json($data,200);
+        return response()->json($data, 200);
     }
 
-    public function destroy(String $personId)
+    public function destroy(string $personId)
     {
-        $person = Person::find($personId);
+        $resp = $this->personService->delete($personId);
 
-        if (!$person) {
+        if ($resp) {
             $data = [
-                'message' => "Person not found",
-                'status' => 404
+                'message' => "User has been deleted"
             ];
-            return response()->json($data, 404);
+            return response()->json($data, 204);
         }
+        return response()->json('something went wrong', 400);
 
-        $person->delete();
-        $data = [
-            'message'=>"User has been deleted"
-        ];
-        return response()->json($data,204);
     }
 }
