@@ -23,7 +23,8 @@ class UserExists
 
     public function handle(Request $request, Closure $next): Response
     {
-        $id = $request->route()->parameter('id');
+        $id = $request->route()->parameter('userId');
+
 
         if (!$this->userService->show($id)){
             $data = [

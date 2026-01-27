@@ -13,11 +13,11 @@ class PersonPostRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "firstName"=>'required|max:20|min:2',
-            "lastName"=>'required|max:20|min:2',
-            "identificationDocument"=>'required|max:20|min:2',
-            "birthDate"=>'required|date',
-            "identificationDocumentType"=>['required',Rule::in('DNI','NIE','Passaporte')]
+            "first_name"=>'required|max:20|min:2',
+            "last_name"=>'required|max:20|min:2',
+            "identification_document"=>'required|max:20|min:2',
+            "birth_date"=>'required|date',
+            "identification_document_type"=>['required',Rule::in('DNI','NIE','Passaporte')]
         ];
     }
     protected function failedValidation(Validator $validator)

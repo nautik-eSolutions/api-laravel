@@ -13,11 +13,11 @@ class PersonPatchRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "firstName"=>'max:20|min:2',
-            "lastName"=>'max:20|min:2',
-            "identificationDocument"=>'max:20|min:2',
-            "birthDate"=>'date',
-            "identificationDocumentType"=>[Rule::in('DNI','NIE','Passaporte')]
+            "first_name"=>'max:20|min:2',
+            "last_name"=>'max:20|min:2',
+            "identification_document"=>'max:20|min:2',
+            "birth_date"=>'date',
+            "identification_document_type"=>[Rule::in('DNI','NIE','Passaporte')]
         ];
     }
     protected function failedValidation(Validator $validator)

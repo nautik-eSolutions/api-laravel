@@ -5,11 +5,20 @@ namespace App\Http\Controllers\persons;
 use App\Http\Controllers\Controller;
 use App\Models\persons\Captain;
 use App\Models\persons\Person;
+use App\Services\persons\PersonService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
 class CaptainController extends Controller
 {
+
+    private PersonService $personService;
+
+    public function __construct()
+    {
+        $this->personService = new PersonService();
+
+    }
 
     public function index()
     {
@@ -27,12 +36,6 @@ class CaptainController extends Controller
 
     public function store(Request $request, String $personId)
     {
-        $person = Person::find($personId);
-        $capt = new Captain();
-        $capt->navigation_license=$request->navigationLicense;
-
-        $captain =  $person->captain()->save($capt);
-
         $data = [
             'captain'=>$captain,
             'status'=>201

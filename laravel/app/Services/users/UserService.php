@@ -58,8 +58,10 @@ class UserService
     {
         $user = $this->show($userId);
 
+
         try {
-            $user->saveOrFail($entity);
+
+
         }catch (Throwable){
 
             return false;
