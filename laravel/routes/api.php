@@ -10,9 +10,9 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/users', [UserController::class, 'index']);
 Route::post('/users', [UserController::class, 'store']);
-Route::get('/users/{id}', [UserController::class, 'show'])->middleware(UserExists::class);
-Route::patch('/users/{id}', [UserController::class, 'update'])->middleware(UserExists::class);
-Route::delete('/users/{id}', [UserController::class, 'destroy'])->middleware(UserExists::class);
+Route::get('/users/{userId}', [UserController::class, 'show'])->middleware(UserExists::class);
+Route::patch('/users/{userId}', [UserController::class, 'update'])->middleware(UserExists::class);
+Route::delete('/users/{userId}', [UserController::class, 'destroy'])->middleware(UserExists::class);
 
 
 

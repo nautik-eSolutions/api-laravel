@@ -10,8 +10,7 @@ class PersonRepository implements PersonInterface
 
     public function store(Person $person) : bool
     {
-       return  $person->saveOrFail();
-
+       return $person->saveOrFail();
     }
 
     public function update($params, $id): bool
@@ -34,4 +33,9 @@ class PersonRepository implements PersonInterface
 
 
     }
+    public function showByIdentificationDocument($identificationDocument){
+        return Person::where('identification_document',$identificationDocument)->get();
+    }
+
+
 }

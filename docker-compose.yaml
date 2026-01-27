@@ -1,0 +1,40 @@
+services:
+  app:
+    build: .
+    container_name: laravel_app
+    volumes:
+      - ./laravel:/var/www/html
+      - vendor:/var/www/html/vendor
+    networks:
+      - laravel
+
+  web:
+    image: httpd:2.4
+    container_name: apache_web
+    ports:
+      - "8080:80"
+    volumes:
+      - ./laravel:/var/www/html
+      - vendor:/var/www/html/vendor
+      - ./docker/apache/000-default.conf:/usr/local/apache2/conf/extra/000-default.conf
+    depends_on:
+      - app
+    command: >
+      sh -c "
+      sed -i '/LoadModule rewrite_module/s/^#//g' /usr/local/apache2/conf/httpd.conf &&
+      sed -i '/LoadModule proxy_module/s/^#//g' /usr/local/apache2/conf/httpd.conf &&
+      sed -i '/LoadModule proxy_fcgi_module/s/^#//g' /usr/local/apache2/conf/httpd.conf &&
+      echo 'Include conf/extra/000-default.conf' >> /usr/local/apache2/conf/httpd.conf &&
+      httpd-foreground
+      "
+      
+
+    networks:
+      - laravel
+
+volumes:
+  vendor:
+
+networks:
+  laravel:
+    driver: bridge

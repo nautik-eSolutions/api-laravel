@@ -54,19 +54,13 @@ class UserService
         }
     }
 
+<<<<<<< HEAD
     public function saveEntity($entity, $userId):bool
     {
         $user = $this->show($userId);
+=======
+>>>>>>> 8f1460ff86b834de9b6ebba4f29d5500bdc966ae
 
-        try {
-            $user->saveOrFail($entity);
-        }catch (Throwable){
-
-            return false;
-        }
-
-        return true;
-    }
 
 
 

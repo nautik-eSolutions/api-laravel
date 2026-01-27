@@ -27,7 +27,11 @@ class PersonService
         return $person;
     }
 
+<<<<<<< HEAD
     public function store($params, $userId):Person
+=======
+    public function store($params): false | Person
+>>>>>>> 8f1460ff86b834de9b6ebba4f29d5500bdc966ae
     {
         $user = $this->userService->show($userId);
 
@@ -35,6 +39,11 @@ class PersonService
 
 
 
+<<<<<<< HEAD
+=======
+        return $this->personRepository->store($person);
+
+>>>>>>> 8f1460ff86b834de9b6ebba4f29d5500bdc966ae
     }
 
     public function update($params, $id)
