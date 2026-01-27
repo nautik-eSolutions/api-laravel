@@ -23,8 +23,11 @@ class BoatRepository implements BoatsInterface
     {
         $result = DB::table('boat')
             ->join('user_person','user_person.person_id','=','boat.person_id')
-            ->join('user','user_id','=','user_person.user_id')
-            ->get();
+            ->join('user','user.id','=','user_person.user_id')
+            ->select('boat.*')->get();
+
+
+
 
         return $result;
     }
