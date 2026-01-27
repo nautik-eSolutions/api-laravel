@@ -6,13 +6,22 @@ use App\Http\Controllers\Controller;
 use App\Models\boats\Boat;
 use App\Models\boats\BoatType;
 use App\Models\users\User;
+use App\Services\boats\BoatService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
+use function Pest\Laravel\json;
 
 class BoatController extends Controller
 {
+
+    private $boatService;
+
+    public function __construct()
+    {
+        $this->boatService = new BoatService();
+    }
 
     public function index(string $userName)
     {
@@ -34,6 +43,12 @@ class BoatController extends Controller
         ];
 
         return response()->json($data, 200);
+    }
+
+    public function indexByOwner($ownerId){
+        $boats = $this->boatService->showBoatsByOwner($ownerId);
+
+        return response()->json($boats,200);
     }
 
 

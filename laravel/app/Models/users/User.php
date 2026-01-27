@@ -34,10 +34,7 @@ class User extends Authenticatable
     ];
 
 
-    public function boats(): HasMany
-    {
-        return $this->hasMany(Boat::class);
-    }
+
 
     public function persons():BelongsToMany
     {
