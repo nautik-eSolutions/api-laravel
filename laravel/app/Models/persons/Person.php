@@ -19,9 +19,9 @@ class Person extends Model
         'identification_document',
         'birth_date',
         'identification_document_type',
-        'isOwner',
+        'is_owner',
         'navigation_license',
-        'isCaptain'
+        'is_captain'
     ];
 
     protected function casts()

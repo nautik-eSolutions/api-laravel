@@ -66,7 +66,7 @@ class PersonController extends Controller
         return $this->response($message,201);
     }
 
-    public function updateCaptain(PersonCaptainPatchRequest $request, int $captainId)
+    public function updateCaptain(PersonCaptainPatchRequest $request, int $userId, $captainId)
     {
         $params= $request->request->all();
 
@@ -75,13 +75,13 @@ class PersonController extends Controller
         return $this->response($message,200);
     }
 
-    public function destroyCaptain($captainId, $userId){
+    public function destroyCaptain($userId, $captainId){
         $message = $this->personService->destroyCaptain($captainId,$userId);
 
         return $this->response($message,204);
     }
 
-    public function destroyOwner($ownerId,$userId){
+    public function destroyOwner($userId,$ownerId){
         $message =  $this->personService->destroyOwner($ownerId,$userId);
 
         return $this->response($message,204);
@@ -98,7 +98,7 @@ class PersonController extends Controller
 
     private function setMessage(string $header,$data){
         return [
-          '$header'=>$data
+          $header=>$data
         ];
     }
 

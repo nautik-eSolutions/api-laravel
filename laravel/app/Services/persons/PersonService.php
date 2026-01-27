@@ -5,6 +5,7 @@ namespace App\Services\persons;
 use App\Models\persons\Person;
 use App\Repositories\persons\PersonRepository;
 use App\Repositories\users\UserRepository;
+use Dflydev\DotAccessData\Data;
 
 
 class PersonService
@@ -64,6 +65,8 @@ class PersonService
         $captain = $this->personRepository->show($captainId);
         $user = $this->userRepository->show($userId);
 
+
+        $captain->is_captain = false;
         return $this->personRepository->destroyCaptain($captain, $user);
 
     }
@@ -83,6 +86,8 @@ class PersonService
     {
         $owner = $this->personRepository->show($ownerId);
         $user = $this->userRepository->show($userId);
+
+        $owner->is_owner =false;
 
         return $this->personRepository->destroyOwner($owner, $user);
 
