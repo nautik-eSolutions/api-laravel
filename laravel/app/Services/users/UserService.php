@@ -11,17 +11,16 @@ use Throwable;
 class UserService
 {
 
-    private $repository;
+
 
     public function __construct()
     {
-        $this->repository = new UserRepository();
     }
 
 
     public function show($id) : User
     {
-        return $this->repository->show($id);
+        return User::find($id);
     }
 
 
@@ -30,38 +29,27 @@ class UserService
         $params = $request->request->all();
 
         $params['password'] = bcrypt($params['password']);
-        $user = new User($params);
 
-        $this->repository->store($user);
-
-        return $user;
+        return User::create($params);
     }
 
-    public function update(UserPatchRequest $request, $id): User
+    public function update(UserPatchRequest $request, $id): bool
     {
         $params = $request->request->all();
 
-        $user = $this->repository->update($params, $id);
+        $user = User::find($id);
 
-        return $user;
+        return $user->updateOrFail($params);
     }
 
-    public function delete($id) : array
+    public function delete($id) : bool
     {
-        if ($this->repository->delete($id)) {
-            return $this->responseMessage('message', 'User was deleted', 204);
-        } else {
-            return $this->responseMessage('error', 'Something went wrong', 500);
-        }
+        $user = User::find($id);
+
+        return $user->deleteOrFail();
     }
 
 
-    private function responseMessage($name, $object, int $status = 200) :array
-    {
-        return [
-            $name => $object,
-            'status' => $status
-        ];
-    }
+
 
 }

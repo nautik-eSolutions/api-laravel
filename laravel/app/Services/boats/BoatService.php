@@ -2,7 +2,7 @@
 
 namespace App\Services\boats;
 
-use App\Http\Requests\persons\PersonPostRequest;
+use App\Http\Requests\persons\BoatPostRequest;
 use App\Repositories\boats\BoatRepository;
 use App\Repositories\persons\PersonRepository;
 use App\Repositories\users\UserRepository;

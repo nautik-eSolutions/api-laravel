@@ -26,6 +26,7 @@ class Person extends Model
         'is_captain'
     ];
 
+
     protected function casts()
     {
         return [

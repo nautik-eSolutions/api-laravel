@@ -5,7 +5,7 @@ namespace App\Http\Controllers\persons;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\persons\PersonCaptainPatchRequest;
 use App\Http\Requests\persons\PersonCaptainPostRequest;
-use App\Http\Requests\persons\PersonPostRequest;
+use App\Http\Requests\persons\BoatPostRequest;
 use App\Services\persons\PersonService;
 
 class PersonController extends Controller
@@ -56,7 +56,7 @@ class PersonController extends Controller
 
         return $this->response($message,201);
     }
-    public function storeOwner(PersonPostRequest $request, int $userId){
+    public function storeOwner(BoatPostRequest $request, int $userId){
         $params = $request->request->all();
 
         $captain =  $this->personService->storeOwner($params,$userId);

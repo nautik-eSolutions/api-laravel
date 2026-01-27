@@ -2,72 +2,76 @@
 
 namespace App\Services\persons;
 
+
+
 use App\Models\persons\Person;
+use App\Models\users\User;
 use App\Repositories\persons\PersonRepository;
 use App\Repositories\users\UserRepository;
-use Dflydev\DotAccessData\Data;
+use Illuminate\Support\Facades\DB;
 
 
 class PersonService
 {
 
-    private PersonRepository $personRepository;
-    private UserRepository $userRepository;
 
     public function __construct()
     {
-        $this->personRepository = new PersonRepository();
-        $this->userRepository = new UserRepository();
+
     }
 
 
     public function show($id): Person
     {
-        return $this->personRepository->show($id);
+        return Person::find($id);
     }
 
     public function showCaptainsByUser($userId)
     {
+       $user =  User::find($userId);
 
-        $user = $this->userRepository->show($userId);
-        return $this->personRepository->showCaptainsByUser($user);
+        return $user->where('is_captain','=',true)->get();
     }
 
     public function showOwnersByUser($userId)
     {
-        $user = $this->userRepository->show($userId);
-        return $this->personRepository->showOwnersByUser($user);
+        $user = User::find($userId);
+
+        return $user->where('is_owner','=',true)->get();
+
     }
 
     public function storeCaptain($params, $userId)
     {
         $params['is_captain'] = true;
 
-        $user = $this->userRepository->show($userId);
+        $user = User::find($userId);
 
         $person = new Person($params);
 
-        return $this->personRepository->storeCaptain($person, $user);
+        return $user->persons()->save($person);
     }
 
     public function updateCaptain($params, $captainId)
     {
-        $captain = $this->personRepository->show($captainId);
+        $captain = Person::find($captainId);
 
-        $captain->navigation_license = $params['navigation_license'];
-
-        return $this->personRepository->updateCaptain($captain);
+        return $captain->update($params);
 
     }
 
     public function destroyCaptain($captainId, $userId)
     {
-        $captain = $this->personRepository->show($captainId);
-        $user = $this->userRepository->show($userId);
-
+        $captain = Person::find($captainId);
+        $user = User::find($userId);
 
         $captain->is_captain = false;
-        return $this->personRepository->destroyCaptain($captain, $user);
+        $captain->save();
+
+        return DB::table('user_person')
+            ->where('person_id','=',$captain->id)
+            ->where('user_id','=',$user->id)
+            ->delete();
 
     }
 
@@ -75,21 +79,27 @@ class PersonService
     {
         $params['is_owner'] = true;
 
-        $user = $this->userRepository->show($userId);
+        $user = User::find($userId);
 
         $person = new Person($params);
 
-        return $this->personRepository->storeCaptain($person, $user);
+        return $user->persons()->save($person);
     }
 
     public function destroyOwner($ownerId, $userId)
     {
-        $owner = $this->personRepository->show($ownerId);
-        $user = $this->userRepository->show($userId);
+        $owner = Person::find($ownerId);
+        $user = User::find($userId);
 
         $owner->is_owner =false;
+        $owner->save();
 
-        return $this->personRepository->destroyOwner($owner, $user);
+
+        return DB::table('user_person')
+            ->where('person_id','=',$owner->id)
+            ->where('user_id','=',$user->id)
+            ->delete();
+
 
     }
 
