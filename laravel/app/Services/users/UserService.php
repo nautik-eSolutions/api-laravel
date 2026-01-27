@@ -31,7 +31,9 @@ class UserService
 
         $params['password'] = bcrypt($params['password']);
         $user = new User($params);
+
         $this->repository->store($user);
+
         return $user;
     }
 
@@ -40,7 +42,6 @@ class UserService
         $params = $request->request->all();
 
         $user = $this->repository->update($params, $id);
-
 
         return $user;
     }
@@ -53,15 +54,6 @@ class UserService
             return $this->responseMessage('error', 'Something went wrong', 500);
         }
     }
-
-<<<<<<< HEAD
-    public function saveEntity($entity, $userId):bool
-    {
-        $user = $this->show($userId);
-=======
->>>>>>> 8f1460ff86b834de9b6ebba4f29d5500bdc966ae
-
-
 
 
     private function responseMessage($name, $object, int $status = 200) :array

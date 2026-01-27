@@ -16,7 +16,10 @@ class Person extends Model
         'last_name',
         'identification_document',
         'birth_date',
-        'identification_document_type'
+        'identification_document_type',
+        'isOwner',
+        'navigation_license',
+        'isCaptain'
     ];
 
     protected function casts()
@@ -26,12 +29,4 @@ class Person extends Model
         ];
     }
 
-    public function owner():HasOne
-    {
-        return $this->hasOne(Owner::class);
-    }
-
-    public function captain():HasOne{
-        return $this->hasOne(Captain::class);
-    }
 }

@@ -38,4 +38,27 @@ class PersonRepository implements PersonInterface
     }
 
 
+    public function setCaptain(Person $person)
+    {
+    }
+
+    public function setOwner(Person $person)
+    {
+        // TODO: Implement setOwner() method.
+    }
+
+    public function updateCaptain(Person $person)
+    {
+        // TODO: Implement updateCaptain() method.
+    }
+
+    public function unsetCaptain(Person $person)
+    {
+        // TODO: Implement unsetCaptain() method.
+    }
+
+    public function unsetOwner(Person $person)
+    {
+        // TODO: Implement unsetOwner() method.
+    }
 }

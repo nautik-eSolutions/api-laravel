@@ -15,5 +15,10 @@ interface PersonInterface
 
     public function delete($id);
 
+    public function setCaptain(Person $person);
+    public function setOwner(Person $person);
+    public function updateCaptain(Person $person);
+    public function unsetCaptain(Person $person);
+    public function unsetOwner(Person $person);
 
 }
