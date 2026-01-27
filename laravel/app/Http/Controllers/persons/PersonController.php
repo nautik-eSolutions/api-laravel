@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\persons;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\persons\PersonPatchRequest;
 use App\Http\Requests\persons\PersonPostRequest;
 use App\Models\persons\Person;
 use App\Services\persons\PersonService;
@@ -47,7 +48,7 @@ class PersonController extends Controller
         return response()->json($person, 200);
     }
 
-    public function update(Request $request, string $personId)
+    public function update(PersonPatchRequest $request, string $personId)
     {
         $person = $this->update($request,$personId);
 
