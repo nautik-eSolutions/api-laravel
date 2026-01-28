@@ -19,9 +19,9 @@ class MooringCategory extends Model
     ];
 
 
-    public function zone(): BelongsTo
+    public function zone(): BelongsToMany
     {
-        return $this->belongsTo(Zone::class);
+        return $this->belongsToMany(Zone::class,'zone_mooring_categories');
     }
 
     public function moorings():HasMany

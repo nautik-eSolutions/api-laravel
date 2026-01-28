@@ -4,6 +4,7 @@ namespace App\Models\ports;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Zone extends Model
@@ -21,9 +22,9 @@ class Zone extends Model
         return $this->belongsTo(Port::class);
     }
 
-    public function mooringCategories(): HasMany
+    public function mooringCategories(): BelongsToMany
     {
-        return $this->hasMany(MooringCategory::class);
+        return $this->BelongsToMany(MooringCategory::class,'zone_mooring_categories');
     }
 
 
