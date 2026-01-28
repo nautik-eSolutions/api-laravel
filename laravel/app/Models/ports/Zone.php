@@ -22,9 +22,9 @@ class Zone extends Model
         return $this->belongsTo(Port::class);
     }
 
-    public function mooringCategories(): BelongsToMany
+    public function mooringCategories(): HasMany
     {
-        return $this->BelongsToMany(MooringCategory::class,'zone_mooring_categories');
+        return $this->HasMany(MooringCategory::class);
     }
 
 

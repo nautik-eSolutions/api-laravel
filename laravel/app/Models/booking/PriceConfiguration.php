@@ -2,7 +2,7 @@
 
 namespace App\Models\booking;
 
-use App\Models\ports\MooringCategory;
+use App\Models\ports\MooringDimensions;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use mysql_xdevapi\TableInsert;
@@ -28,7 +28,7 @@ class PriceConfiguration extends Model
 
     public function mooringCategories(): BelongsToMany
     {
-    return $this->belongsToMany(MooringCategory::class,'mooring_category_price_configuration');
+    return $this->belongsToMany(MooringDimensions::class,'mooring_category_price_configuration');
     }
 }
 

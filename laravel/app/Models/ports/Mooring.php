@@ -18,7 +18,7 @@ class Mooring extends Model
 
     public function mooringCategory():BelongsTo
     {
-        return $this->belongsTo(MooringCategory::class);
+        return $this->belongsToMany(MooringDimensions::class,);
     }
 
     public function mooringStatuses()

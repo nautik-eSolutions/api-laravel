@@ -17,7 +17,7 @@ class BookingController extends Controller
     {
 
     }
-    public function indexMooringsByDatePort($portId,$startDate, $endDate){
+    public function indexMooringsByDatePort($portId){
         $moorings =  $this->mooringService->getMooringsByPort($portId);
 
         return $moorings;
