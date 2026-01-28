@@ -25,6 +25,11 @@ class Booking extends Model
         return $this->belongsTo(Boat::class);
     }
 
+    public function bookingStatus(): BelongsTo
+    {
+        return $this->belongsTo(BookingStatus::class);
+    }
+
     protected function casts(): array
     {
         return [

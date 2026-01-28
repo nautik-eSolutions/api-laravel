@@ -2,10 +2,12 @@
 
 namespace App\Models\boats;
 
+use App\Models\booking\Booking;
 use App\Models\persons\Person;
 use App\Models\users\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Boat extends Model
 {
@@ -29,6 +31,11 @@ class Boat extends Model
     public function boatType(): BelongsTo
     {
         return $this->belongsTo(BoatType::class);
+    }
+
+    public function bookings ( ): HasMany
+    {
+        return $this->hasMany(Booking::class);
     }
 
 }
