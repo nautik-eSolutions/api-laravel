@@ -3,8 +3,10 @@
 namespace App\Models\booking;
 
 use App\Models\boats\Boat;
+use App\Models\ports\Mooring;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Booking extends Model
 {
@@ -28,6 +30,11 @@ class Booking extends Model
     public function bookingStatus(): BelongsTo
     {
         return $this->belongsTo(BookingStatus::class);
+    }
+
+    public function moorings() : BelongsToMany
+    {
+        return $this->belongsToMany(Mooring::class,'mooring_booking');
     }
 
     protected function casts(): array

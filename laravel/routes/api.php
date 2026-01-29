@@ -38,4 +38,5 @@ Route::patch('/boats/{boatId}',[BoatController::class,'update']);
 Route::delete('/boats/{boatId}',[BoatController::class,'destroy']);
 
 Route::get('/ports/{id}/moorings',[BookingController::class,'indexMooringsByDatePort']);
+Route::get('/ports/{id}/moorings/{startDate}/{endDate}',[BookingController::class,'indexMooringsByDateZonePort']);
 

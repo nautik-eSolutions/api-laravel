@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Services\booking\MooringService;
+use function Symfony\Component\String\s;
 
 class BookingController extends Controller
 {
@@ -18,13 +19,13 @@ class BookingController extends Controller
 
     }
     public function indexMooringsByDatePort($portId){
-        $moorings =  $this->mooringService->getMooringsByPort($portId);
+        $moorings =  $this->mooringService->showMooringsByPort($portId);
 
         return $moorings;
     }
 
-    public function indexMooringsByDateZonePort(){
-
+    public function indexMooringsByDateZonePort($portId,$startDate,$endDate){
+        return $this->mooringService->showAvailableMooringsByPortAndDates($portId,$startDate,$endDate);
     }
 
 
