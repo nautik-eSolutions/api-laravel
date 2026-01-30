@@ -42,28 +42,23 @@ class MooringService
     }
 
 
-    public function showAllAvailableMooringsByPortAndDates(int $portId, $startDate, $endDate) : array
+    public function showAllAvailableMooringsByPortAndDates(int $portId, $startDate, $endDate): array
     {
         $startDate = date_create_from_format("Y-m-d", $startDate);
         $endDate = date_create_from_format("Y-m-d", $endDate);
 
         $moorings = $this->showMooringsByPort($portId);
         $availableMoorings = [];
-        $bookings = [];
 
         foreach ($moorings as $mooring) {
-            $bookings[] = $mooring->bookings
+            $booking = $mooring->bookings
                 ->search(
                     function (Booking $booking) use ($startDate, $endDate) {
                         return ($booking->start_date < $endDate) && ($booking->end_date > $startDate);
                     });
-        }
 
-
-        for ($i = 0; $i < sizeof($bookings); $i++) {
-
-            if ($bookings[$i]===false){
-                $availableMoorings[] = $moorings[$i];
+            if ($booking === false) {
+                $availableMoorings[] = $mooring;
             }
         }
 
@@ -72,17 +67,16 @@ class MooringService
     }
 
 
-    public function showAvailableMooringsByPortDimensionsAndDate(int $portId, int $beam, int $length,$startDate,$endDate){
-        $port =Port::find($portId);
+    public function showAvailableMooringsByPortDimensionsAndDate(int $portId, int $beam, int $length, $startDate, $endDate)
+    {
+        $port = Port::find($portId);
 
-        $zones =  $port->zones;
+        $zones = $port->zones;
 
         $mooringCategories = $zones->mooringCategories;
 
         dd($mooringCategories);
     }
-
-
 
 
 }
