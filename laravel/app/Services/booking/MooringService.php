@@ -42,7 +42,7 @@ class MooringService
     }
 
 
-    public function showAvailableMooringsByPortAndDates(int $portId, $startDate, $endDate)
+    public function showAllAvailableMooringsByPortAndDates(int $portId, $startDate, $endDate) : array
     {
         $startDate = date_create_from_format("Y-m-d", $startDate);
         $endDate = date_create_from_format("Y-m-d", $endDate);
@@ -70,6 +70,19 @@ class MooringService
 
         return $availableMoorings;
     }
+
+
+    public function showAvailableMooringsByPortDimensionsAndDate(int $portId, int $beam, int $length,$startDate,$endDate){
+        $port =Port::find($portId);
+
+        $zones =  $port->zones;
+
+        $mooringCategories = $zones->mooringCategories;
+
+        dd($mooringCategories);
+    }
+
+
 
 
 }
