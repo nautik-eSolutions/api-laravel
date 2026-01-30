@@ -32,9 +32,9 @@ class Booking extends Model
         return $this->belongsTo(BookingStatus::class);
     }
 
-    public function moorings() : BelongsToMany
+    public function moorings() : BelongsTo
     {
-        return $this->belongsToMany(Mooring::class,'mooring_booking');
+        return $this->belongsTo(Mooring::class);
     }
 
     protected function casts(): array

@@ -2,10 +2,12 @@
 
 namespace App\Models\ports;
 
+use App\Models\booking\Booking;
 use App\Models\booking\MooringStatus;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Mooring extends Model
 {
@@ -22,9 +24,9 @@ class Mooring extends Model
         return $this->belongsTo(MooringDimensions::class);
     }
 
-    public function bookings (): BelongsToMany
+    public function bookings (): HasMany
     {
-        return $this->belongsToMany(Mooring::class,'mooring_booking');
+        return $this->hasMany(Booking::class);
     }
 
     public function mooringStatuses()

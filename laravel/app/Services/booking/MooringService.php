@@ -2,8 +2,11 @@
 
 namespace App\Services\booking;
 
+use App\Models\booking\Booking;
+use App\Models\ports\Mooring;
 use App\Models\ports\Port;
 use Date;
+use Dflydev\DotAccessData\Data;
 
 class MooringService
 {
@@ -18,6 +21,7 @@ class MooringService
         $zones = $port->zones;
 
         $mooringsCategoriesCollection = [];
+        $mooringsCategories = [];
         $moorings = [];
 
         foreach ($zones as $zone) {
@@ -27,12 +31,10 @@ class MooringService
         foreach ($mooringsCategoriesCollection as $mooringsCategories) {
             foreach ($mooringsCategories as $mooringsCategory) {
                 foreach ($mooringsCategory->moorings as $mooring) {
-                    $moorings[] = $mooring;
+                    array_push($moorings,$mooring);
                 }
-
             }
         }
-
 
         return $moorings;
     }
@@ -45,16 +47,55 @@ class MooringService
 
         $moorings = $this->showMooringsByPort($portId);
 
+        $bookingsAvailable = [];
         $availableMoorings = [];
-        $port = Port::find($portId);
 
-
+        $bookings = [];
         foreach ($moorings as $mooring){
-            $availableMoorings[] = $mooring->bookings;
+            $bookings = $mooring->bookings
+                ->where('start_date','>=',$startDate)
+                ->where('end_date','<=',$endDate);
+
+            if ($bookings->all()){
+               $bookingsAvailable[]=$bookings->all();
+            }
         }
 
-        return $availableMoorings;
+
+
+        $mooring = Mooring::find(3);
+
+
+
+
+
+        dd($mooring->bookings->where('start_date','>=',$startDate)->where('end_date','<=',$endDate));
+
+        dd();
+
+
+
+
+
+        $test =  collect($moorings);
+        $test->filter(function(Mooring $mooring) use ($endDate, $startDate) {
+            return !($mooring->bookings->filter(function (Booking $booking) use ($startDate, $endDate) {
+                return  $booking->where('start_date','>=',$startDate)
+                    ->where('end_date','<=',$endDate);
+            }));
+        });
+
+        foreach ($bookingsAvailable as $booking){
+            foreach ($booking as $item){
+                $bookings [] = $item;
+            }
+        }
+
+
+        return $test;
     }
+
+
 
 
 }
