@@ -20,7 +20,7 @@ class MooringDimensions extends Model
     ];
 
 
-    public function MooringCategory() : HasMany
+    public function mooringCategory() : HasMany
     {
         return $this->HasMany(MooringCategory::class);
     }

@@ -91,7 +91,45 @@ class MooringService
             ->where('max_length','>=',$length)
             ->where('max_beam','>=',$beam);
 
-        return $mooringDimensions;
+
+        $moorings =  new Collection;
+        $reverseMooringCategories = new Collection;
+        foreach ($mooringDimensions->all() as $dimension){
+            foreach($dimension->mooringCategory as $mooringCategory){
+
+                $reverseMooringCategories->push($mooringCategory);
+            };
+        }
+
+
+        foreach ($reverseMooringCategories->unique()->all() as $mooringCategory){
+            foreach ($mooringCategory->moorings as $mooring){
+                $moorings->push($mooring);
+            }
+        }
+
+
+
+
+        return $reverseMooringCategories->unique()->all();
+    }
+
+
+    private function indexAvailableBookingsByMooringsAndDates(Collection $moorings, $startDate, $endDate){
+
+        foreach ($moorings as $mooring) {
+            $isBooked = $mooring->bookings
+                ->search(
+                    function (Booking $booking) use ($startDate, $endDate) {
+                        return ($booking->start_date < $endDate) && ($booking->end_date > $startDate);
+                    });
+
+            if ($isBooked === false) {
+                $availableMoorings[] = $mooring;
+            }
+
+            return $availableMoorings;
+        }
     }
 
 
