@@ -14,7 +14,7 @@ class PortCollection extends ResourceCollection
     public function toArray(Request $request)
     {
         return [
-            'data'=>$this->collection
+            'ports'=>$this->collection
         ];
     }
 

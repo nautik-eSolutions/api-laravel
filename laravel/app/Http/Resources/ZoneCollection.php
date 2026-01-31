@@ -7,10 +7,11 @@ use Illuminate\Http\Resources\Json\ResourceCollection;
 
 class ZoneCollection extends ResourceCollection
 {
+    public $collects = ZoneResource::class;
     public function toArray(Request $request): array
     {
         return [
-            'data' => $this->collection,
+            $this->collection
         ];
     }
 }

@@ -3,10 +3,11 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 use Illuminate\Http\Resources\JsonApi\JsonApiResource;
 
-class PortResource extends JsonApiResource
+class PortResource extends JsonResource
 {
 
 
@@ -18,7 +19,8 @@ class PortResource extends JsonApiResource
     public function toArray(Request $request): array
     {
         return [
-            'name',$this->name
+            'name'=>$this->name,
+            'zones'=>new ZoneCollection($this->zones)
         ];
     }
 }
