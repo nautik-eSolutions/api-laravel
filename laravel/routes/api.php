@@ -1,10 +1,8 @@
 <?php
 
 use App\Http\Controllers\boats\BoatController;
-use App\Http\Controllers\PortController;
-use App\Http\Controllers\persons\CaptainController;
-use App\Http\Controllers\persons\OwnerController;
 use App\Http\Controllers\persons\PersonController;
+use App\Http\Controllers\ports\PortController;
 use App\Http\Controllers\users\UserController;
 use App\Http\Middleware\users\UserExists;
 use Illuminate\Support\Facades\Route;
@@ -37,7 +35,7 @@ Route::post('/boats/{ownerId}',[BoatController::class,'store']);
 Route::patch('/boats/{boatId}',[BoatController::class,'update']);
 Route::delete('/boats/{boatId}',[BoatController::class,'destroy']);
 
+Route::get('/ports',[PortController::class,'index']);
 Route::get('/ports/{id}/moorings',[PortController::class,'indexMooringsByPort']);
 Route::get('/ports/{id}/moorings/{startDate}/{endDate}',[PortController::class,'indexMooringsByPortDate']);
 Route::get('/ports/{id}/moorings/{length}/{beam}/{startDate}/{endDate}',[PortController::class,'indexMooringsByPortZoneDate']);
-

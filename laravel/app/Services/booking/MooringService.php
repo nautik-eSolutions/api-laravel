@@ -92,7 +92,7 @@ class MooringService
             ->where('max_beam','>=',$beam);
 
 
-        $moorings =  new Collection;
+        $moorings = [];
         $reverseMooringCategories = new Collection;
         foreach ($mooringDimensions->all() as $dimension){
             foreach($dimension->mooringCategory as $mooringCategory){
@@ -104,20 +104,19 @@ class MooringService
 
         foreach ($reverseMooringCategories->unique()->all() as $mooringCategory){
             foreach ($mooringCategory->moorings as $mooring){
-                $moorings->push($mooring);
+                $moorings[] = $mooring;
             }
         }
 
+        return $this->indexAvailableBookingsByMooringsAndDates($moorings,$startDate,$endDate);
 
-
-
-        return $reverseMooringCategories->unique()->all();
     }
 
 
-    private function indexAvailableBookingsByMooringsAndDates(Collection $moorings, $startDate, $endDate){
-
+    private function indexAvailableBookingsByMooringsAndDates($moorings, $startDate, $endDate){
+        $availableMoorings =  new Collection;
         foreach ($moorings as $mooring) {
+
             $isBooked = $mooring->bookings
                 ->search(
                     function (Booking $booking) use ($startDate, $endDate) {
@@ -125,12 +124,14 @@ class MooringService
                     });
 
             if ($isBooked === false) {
-                $availableMoorings[] = $mooring;
+                $availableMoorings->push($mooring);
             }
 
-            return $availableMoorings;
         }
+        return $availableMoorings->all();
     }
+
+
 
 
 }

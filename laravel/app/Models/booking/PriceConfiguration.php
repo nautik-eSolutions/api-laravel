@@ -5,7 +5,6 @@ namespace App\Models\booking;
 use App\Models\ports\MooringDimensions;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use mysql_xdevapi\TableInsert;
 
 class PriceConfiguration extends Model
 {
