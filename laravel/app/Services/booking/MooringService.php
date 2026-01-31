@@ -7,6 +7,7 @@ use App\Models\ports\Mooring;
 use App\Models\ports\Port;
 use Date;
 use Dflydev\DotAccessData\Data;
+use Illuminate\Support\Collection;
 use function PHPUnit\Framework\isFalse;
 
 class MooringService
@@ -51,13 +52,13 @@ class MooringService
         $availableMoorings = [];
 
         foreach ($moorings as $mooring) {
-            $booking = $mooring->bookings
+            $isBooked = $mooring->bookings
                 ->search(
                     function (Booking $booking) use ($startDate, $endDate) {
                         return ($booking->start_date < $endDate) && ($booking->end_date > $startDate);
                     });
 
-            if ($booking === false) {
+            if ($isBooked === false) {
                 $availableMoorings[] = $mooring;
             }
         }
@@ -67,15 +68,30 @@ class MooringService
     }
 
 
-    public function showAvailableMooringsByPortDimensionsAndDate(int $portId, int $beam, int $length, $startDate, $endDate)
+    public function showAvailableMooringsByPortDimensionsAndDate(int $portId, int $length, int $beam, $startDate, $endDate)
     {
         $port = Port::find($portId);
 
         $zones = $port->zones;
+        $mooringCategories = [];
+        $mooringDimensions = new Collection;
 
-        $mooringCategories = $zones->mooringCategories;
+        foreach ($zones as $zone) {
+            foreach ($zone->mooringCategories as $mooringCategory){
+                $mooringCategories[] = $mooringCategory;
+            }
+        }
 
-        dd($mooringCategories);
+
+        foreach ($mooringCategories as $mooringCategory){
+            $mooringDimensions->push($mooringCategory->mooringDimensions);
+        }
+
+        $mooringDimensions = $mooringDimensions
+            ->where('max_length','>=',$length)
+            ->where('max_beam','>=',$beam);
+
+        return $mooringDimensions;
     }
 
 
