@@ -176,10 +176,10 @@ class MooringService
         $priceConfigurations =  new Collection;
 
         foreach ($toReturnMooringCategories->unique()->all() as $mooringCategory){
-            $priceConfigurations->push($mooringCategory->)
+            $priceConfigurations->push($mooringCategory->priceConfigurations);
         }
 
-
+        return $toReturnMooringCategories->unique('id')->all();
     }
 
 

@@ -13,7 +13,7 @@ class MooringCategory extends Model
 
     public function zones(): BelongsTo
     {
-        return $this->belongsTo(Zone::class);
+        return $this->belongsTo(Zone::class,'zone_id');
     }
     public function mooringDimensions(): BelongsTo
     {

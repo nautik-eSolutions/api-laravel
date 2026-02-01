@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\ports;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\MooringCategoryCollection;
 use App\Http\Resources\PortCollection;
 use App\Http\Resources\PortResource;
+use App\Http\Resources\PriceConfigurationCollection;
 use App\Models\ports\Port;
 use App\Services\booking\MooringService;
 use App\Services\booking\PortService;
@@ -35,7 +37,8 @@ class PortController extends Controller
     }
 
     public function indexMooringsByPortZoneDate($portId,$length, $beam,$startDate, $endDate){
-        return $this->mooringService->indexAvailableZonesByDimensionsDate($portId,$length,$beam,$startDate,$endDate);
+       $mooringCategories = $this->mooringService->indexAvailableZonesByDimensionsDate($portId,$length,$beam,$startDate,$endDate);
+        return new MooringCategoryCollection($mooringCategories);
     }
 
 

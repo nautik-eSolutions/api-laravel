@@ -2,11 +2,14 @@
 
 namespace App\Models\booking;
 
+use App\Http\Resources\PriceConfigurationResource;
 use App\Models\ports\MooringCategory;
 use App\Models\ports\MooringDimensions;
+use Illuminate\Database\Eloquent\Attributes\UseResource;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
+#[UseResource(PriceConfigurationResource::class)]
 class PriceConfiguration extends Model
 {
     public $timestamps = false;
