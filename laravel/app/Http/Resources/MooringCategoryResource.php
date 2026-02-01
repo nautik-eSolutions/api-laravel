@@ -12,6 +12,7 @@ class MooringCategoryResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
+            'id'=> $this->id,
             'zone' => new ZoneResource($this->zones),
             'price'=> new PriceConfigurationCollection($this->priceConfigurations)
 

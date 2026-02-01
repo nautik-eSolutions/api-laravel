@@ -11,7 +11,7 @@ class MooringCategoryCollection extends ResourceCollection
     public function toArray(Request $request): array
     {
         return [
-            'data' => $this->collection,
+            $this->collection
         ];
     }
 }

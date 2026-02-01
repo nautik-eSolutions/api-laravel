@@ -178,8 +178,7 @@ class MooringService
         foreach ($toReturnMooringCategories->unique()->all() as $mooringCategory){
             $priceConfigurations->push($mooringCategory->priceConfigurations);
         }
-
-        return $toReturnMooringCategories->unique('id')->all();
+        return $toReturnMooringCategories->unique('id')->values()->all();
     }
 
 
