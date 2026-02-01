@@ -6,6 +6,7 @@ use App\Models\booking\Booking;
 use App\Models\ports\Mooring;
 use App\Models\ports\Port;
 use Date;
+use DB;
 use Dflydev\DotAccessData\Data;
 use Illuminate\Support\Collection;
 use function PHPUnit\Framework\isFalse;
@@ -75,6 +76,10 @@ class MooringService
         $zones = $port->zones;
         $mooringCategories = [];
         $mooringDimensions = new Collection;
+        $toParseStartDate =  date_create($startDate);
+        $parsedStartDate = date_format($toParseStartDate,'Y-m-d');
+        $toParseEndDate =  date_create($endDate);
+        $parsedEndDate = date_format($toParseEndDate,'Y-m-d');
 
         foreach ($zones as $zone) {
             foreach ($zone->mooringCategories as $mooringCategory){
@@ -108,7 +113,72 @@ class MooringService
             }
         }
 
-        return $this->indexAvailableBookingsByMooringsAndDates($moorings,$startDate,$endDate);
+        return $this->indexAvailableBookingsByMooringsAndDates($moorings,$parsedStartDate,$parsedEndDate);
+
+    }
+
+
+
+    public function indexAvailableZonesByDimensionsDate(int $portId, int $length, int $beam, $startDate, $endDate){
+        $port = Port::find($portId);
+
+        $zones = $port->zones;
+        $mooringCategories = [];
+        $mooringDimensions = new Collection;
+        $toParseStartDate =  date_create($startDate);
+        $parsedStartDate = date_format($toParseStartDate,'Y-m-d');
+        $toParseEndDate =  date_create($endDate);
+        $parsedEndDate = date_format($toParseEndDate,'Y-m-d');
+
+        foreach ($zones as $zone) {
+            foreach ($zone->mooringCategories as $mooringCategory){
+                $mooringCategories[] = $mooringCategory;
+            }
+        }
+
+
+        foreach ($mooringCategories as $mooringCategory){
+            $mooringDimensions->push($mooringCategory->mooringDimensions);
+        }
+
+        $mooringDimensions = $mooringDimensions
+            ->where('max_length','>=',$length)
+            ->where('max_beam','>=',$beam);
+
+
+        $moorings = [];
+        $reverseMooringCategories = new Collection;
+        foreach ($mooringDimensions->all() as $dimension){
+            foreach($dimension->mooringCategory as $mooringCategory){
+
+                $reverseMooringCategories->push($mooringCategory);
+            };
+        }
+
+
+
+        foreach ($reverseMooringCategories->unique()->all() as $mooringCategory){
+            foreach ($mooringCategory->moorings as $mooring){
+                $moorings[] = $mooring;
+            }
+        }
+
+        $availableMoorings = $this->indexAvailableBookingsByMooringsAndDates($moorings,$parsedStartDate,$parsedEndDate);
+
+
+        $toReturnMooringCategories = new Collection;
+
+        foreach ($availableMoorings as $mooring) {
+            $toReturnMooringCategories->push($mooring->mooringCategory);
+        }
+
+
+        $priceConfigurations =  new Collection;
+
+        foreach ($toReturnMooringCategories->unique()->all() as $mooringCategory){
+            $priceConfigurations->push($mooringCategory->)
+        }
+
 
     }
 
@@ -129,6 +199,15 @@ class MooringService
 
         }
         return $availableMoorings->all();
+    }
+
+    public function zonesByDateAndDimensions($portId,$length, $beam, $startDate,$endDate){
+        $toParseStartDate =  date_create($startDate);
+        $parsedStartDate = date_format($toParseStartDate,'Y-m-d');
+        $toParseEndDate =  date_create($endDate);
+        $parsedEndDate = date_format($toParseEndDate,'Y-m-d');
+
+
     }
 
 

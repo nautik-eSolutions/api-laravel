@@ -4,6 +4,7 @@ namespace App\Models\ports;
 
 use App\Models\booking\Booking;
 use App\Models\booking\MooringStatus;
+use App\Models\booking\PriceConfiguration;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -21,7 +22,7 @@ class Mooring extends Model
 
     public function mooringCategory():BelongsTo
     {
-        return $this->belongsTo(MooringDimensions::class);
+        return $this->belongsTo(MooringCategory::class);
     }
 
     public function bookings (): HasMany

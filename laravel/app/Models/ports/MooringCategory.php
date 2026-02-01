@@ -2,6 +2,7 @@
 
 namespace App\Models\ports;
 
+use App\Models\booking\PriceConfiguration;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
@@ -22,6 +23,10 @@ class MooringCategory extends Model
     public function moorings()
     {
         return $this->hasMany(Mooring::class);
+    }
+
+    public function priceConfigurations(){
+        return $this->belongsToMany(PriceConfiguration::class,'mooring_zone_price_configuration');
     }
 
 }

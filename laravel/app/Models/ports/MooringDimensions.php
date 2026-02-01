@@ -25,6 +25,8 @@ class MooringDimensions extends Model
         return $this->HasMany(MooringCategory::class);
     }
 
+
+
     public function priceConfigurations(): BelongsToMany
     {
         return $this->belongsToMany(PriceConfiguration::class,'mooring_category_price_configuration');

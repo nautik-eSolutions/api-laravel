@@ -35,7 +35,7 @@ class PortController extends Controller
     }
 
     public function indexMooringsByPortZoneDate($portId,$length, $beam,$startDate, $endDate){
-        return $this->mooringService->showAvailableMooringsByPortDimensionsAndDate($portId,$length,$beam,$startDate,$endDate);
+        return $this->mooringService->indexAvailableZonesByDimensionsDate($portId,$length,$beam,$startDate,$endDate);
     }
 
 
