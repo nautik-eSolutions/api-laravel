@@ -3,15 +3,28 @@
 use App\Http\Controllers\boats\BoatController;
 use App\Http\Controllers\persons\PersonController;
 use App\Http\Controllers\ports\PortController;
+use App\Http\Controllers\users\UserAuthController;
 use App\Http\Controllers\users\UserController;
 use App\Http\Middleware\users\UserExists;
 use Illuminate\Support\Facades\Route;
+
+Route::post('register',[UserAuthController::class,'register']);
+Route::post('login',[UserAuthController::class,'login']);
+Route::post('logout',[UserAuthController::class,'logout'])
+    ->middleware('auth:sanctum');
+
+
+
 
 Route::get('/users', [UserController::class, 'index']);
 Route::post('/users', [UserController::class, 'store']);
 Route::get('/users/{userId}', [UserController::class, 'show'])->middleware(UserExists::class);
 Route::patch('/users/{userId}', [UserController::class, 'update'])->middleware(UserExists::class);
 Route::delete('/users/{userId}', [UserController::class, 'destroy'])->middleware(UserExists::class);
+
+
+
+
 
 Route::get('/captains/{id}',[PersonController::class,'show']);
 Route::get('/owners/{id}',[PersonController::class,'show']);
