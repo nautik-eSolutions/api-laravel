@@ -3,35 +3,33 @@
 namespace App\Http\Controllers\users;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\users\UserLoginRequest;
+use App\Http\Requests\users\UserPostRequest;
 use App\Models\users\User;
-use Hash;
+use App\Services\users\UserService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class UserAuthController extends Controller
 {
-    public function register(Request $request){
-        $registerUserData = $request->validate([
-            'name'=>'required|string',
-            'email'=>'required|string|email|unique:users',
-            'password'=>'required|min:8'
-        ]);
-        $user = User::create([
-            'name' => $registerUserData['name'],
-            'email' => $registerUserData['email'],
-            'password' => Hash::make($registerUserData['password']),
-        ]);
+    private UserService $userService;
+    public function __construct()
+    {
+        $this->userService = new UserService();
+    }
+
+    public function register(UserPostRequest $request){
+        $this->userService->store($request);
+
         return response()->json([
             'message' => 'User Created ',
         ]);
     }
 
-    public function login(Request $request){
-        $loginUserData = $request->validate([
-            'email'=>'required|string|email',
-            'password'=>'required|min:8'
-        ]);
-        $user = User::where('email',$loginUserData['email'])->first();
-        if(!$user || !Hash::check($loginUserData['password'],$user->password)){
+    public function login(UserLoginRequest $request){
+
+        $user = User::where('email',$request['email'])->first();
+        if(!$user || !Hash::check($request['password'],$user->password)){
             return response()->json([
                 'message' => 'Invalid Credentials'
             ],401);

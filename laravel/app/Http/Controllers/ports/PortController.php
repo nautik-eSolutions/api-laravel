@@ -41,5 +41,10 @@ class PortController extends Controller
         return new MooringCategoryCollection($mooringCategories);
     }
 
+    public function indexAvailableZonesByDimensionsDate($portId, $length, $beam,$startDate,$endDate){
+        $mooringCategories =  $this->mooringService->indexAvailableZonesByDimensionsDate($portId,$length,$beam,$startDate,$endDate);
+        return new MooringCategoryCollection($mooringCategories);
+    }
+
 
 }

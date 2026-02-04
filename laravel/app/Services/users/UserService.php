@@ -6,6 +6,7 @@ use App\Http\Requests\users\UserPatchRequest;
 use App\Http\Requests\users\UserPostRequest;
 use App\Models\users\User;
 use App\Repositories\users\UserRepository;
+use Illuminate\Support\Facades\Hash;
 use Throwable;
 
 class UserService
@@ -28,7 +29,7 @@ class UserService
     {
         $params = $request->request->all();
 
-        $params['password'] = bcrypt($params['password']);
+        $params['password'] = Hash::make($params['password']);
 
         return User::create($params);
     }

@@ -8,9 +8,9 @@ use App\Http\Controllers\users\UserController;
 use App\Http\Middleware\users\UserExists;
 use Illuminate\Support\Facades\Route;
 
-Route::post('register',[UserAuthController::class,'register']);
-Route::post('login',[UserAuthController::class,'login']);
-Route::post('logout',[UserAuthController::class,'logout'])
+Route::post('/register',[UserAuthController::class,'register']);
+Route::post('/login',[UserAuthController::class,'login']);
+Route::post('/logout',[UserAuthController::class,'logout'])
     ->middleware('auth:sanctum');
 
 
