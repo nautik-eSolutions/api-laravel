@@ -5,6 +5,7 @@ namespace App\Http\Controllers\users;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\users\UserLoginRequest;
 use App\Http\Requests\users\UserPostRequest;
+use App\Http\Resources\UserAuthResource;
 use App\Models\users\User;
 use App\Services\users\UserService;
 use Illuminate\Http\Request;
@@ -34,10 +35,10 @@ class UserAuthController extends Controller
                 'message' => 'Invalid Credentials'
             ],401);
         }
+
         $token = $user->createToken($user->name.'-AuthToken')->plainTextToken;
-        return response()->json([
-            'access_token' => $token,
-        ]);
+        
+        return $this->authenticatedResponse($user,$token);
     }
 
     public function logout(){
@@ -47,5 +48,19 @@ class UserAuthController extends Controller
             "message"=>"logged out"
         ]);
     }
+
+
+    private function authenticatedResponse($user, $token){
+        $userResponse = [
+          'userName' =>$user->user_name,
+          'email'=>$user->email
+        ];
+
+        return [
+            'user'=>$userResponse,
+            'token'=>$token
+        ];
+    }
+
 
 }

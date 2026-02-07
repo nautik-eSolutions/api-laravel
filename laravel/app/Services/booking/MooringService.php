@@ -24,7 +24,6 @@ class MooringService
         $zones = $port->zones;
 
         $mooringsCategoriesCollection = [];
-        $mooringsCategories = [];
         $moorings = [];
 
         foreach ($zones as $zone) {

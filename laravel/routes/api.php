@@ -43,7 +43,7 @@ Route::delete('/users/{userId}/owners/{ownerId}',[PersonController::class,'destr
 
 
 Route::get('/owners/{ownerId}/boats',[BoatController::class,'indexByOwner']);
-Route::get('/users/{userId}/boats',[BoatController::class,'indexByUser']);
+Route::get('/boats/{userId}/boats',[BoatController::class,'indexByUser']);
 Route::get('/boats/{id}',[BoatController::class,'show']);
 Route::post('/boats/{ownerId}',[BoatController::class,'store']);
 Route::patch('/boats/{boatId}',[BoatController::class,'update']);
