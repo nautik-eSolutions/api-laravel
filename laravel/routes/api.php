@@ -41,13 +41,21 @@ Route::patch('/users/{userId}/captains/{captainId}',[PersonController::class,'up
 Route::delete('/users/{userId}/captains/{captainId}',[PersonController::class,'destroyCaptain'])->middleware(UserExists::class);
 Route::delete('/users/{userId}/owners/{ownerId}',[PersonController::class,'destroyOwner'])->middleware(UserExists::class);
 
-
+/*
 Route::get('/owners/{ownerId}/boats',[BoatController::class,'indexByOwner']);
 Route::get('/boats/{userId}/boats',[BoatController::class,'indexByUser']);
 Route::get('/boats/{id}',[BoatController::class,'show']);
 Route::post('/boats/{ownerId}',[BoatController::class,'store']);
 Route::patch('/boats/{boatId}',[BoatController::class,'update']);
 Route::delete('/boats/{boatId}',[BoatController::class,'destroy']);
+*/
+
+Route::controller(BoatController::class)->group(function(){
+   Route::get('/boats','indexByUser');
+})->middleware('auth:sanctum');
+
+
+Route::apiResource('boats',BoatController::class);
 
 Route::get('/ports',[PortController::class,'index']);
 Route::get('/ports/{id}/moorings',[PortController::class,'indexMooringsByPort']);
