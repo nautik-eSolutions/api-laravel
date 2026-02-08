@@ -17,7 +17,7 @@ class PersonPostRequest extends FormRequest
             "last_name"=>'required|max:20|min:2',
             "identification_document"=>'required|max:20|min:2',
             "birth_date"=>'required|date',
-            "identification_document_type"=>['required',Rule::in('DNI','NIE','Passaporte')]
+
         ];
     }
     protected function failedValidation(Validator $validator)

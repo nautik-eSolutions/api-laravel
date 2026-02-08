@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\boats\BoatPatchRequest;
 use App\Http\Requests\boats\BoatPostRequest;
 use App\Services\boats\BoatService;
+use Illuminate\Support\Facades\Auth;
 
 class BoatController extends Controller
 {
@@ -17,25 +18,25 @@ class BoatController extends Controller
         $this->boatService = new BoatService();
     }
 
-    public function indexByOwner($ownerId){
+    public function index(){
 
-        $boats = $this->boatService->showBoatsByOwner($ownerId);
+        $user = auth('sanctum')->user();
 
-        return response()->json($boats,200);
-    }
-    public function indexByUser($userId){
-
-        $boats = $this->boatService->showBoatsByUser($userId);
+        $boats = $this->boatService->showBoatsByUser($user);
 
         return response()->json($boats,200);
     }
 
 
-    public function store(BoatPostRequest $request, int $ownerId)
+
+
+    public function store(BoatPostRequest $request)
     {
         $params = $request->request->all();
 
-        $boat = $this->boatService->store($params,$ownerId);
+        $user = auth('sanctum')->user();
+
+        $boat = $this->boatService->store($params,$user);
 
         return response()->json($boat, 201);
 

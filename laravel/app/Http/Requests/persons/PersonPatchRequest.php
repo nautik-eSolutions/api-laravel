@@ -16,8 +16,7 @@ class PersonPatchRequest extends FormRequest
             "first_name"=>'max:20|min:2',
             "last_name"=>'max:20|min:2',
             "identification_document"=>'max:20|min:2',
-            "birth_date"=>'date',
-            "identification_document_type"=>[Rule::in('DNI','NIE','Passaporte')]
+            "birth_date"=>'date'
         ];
     }
     protected function failedValidation(Validator $validator)

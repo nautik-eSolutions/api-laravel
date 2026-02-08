@@ -6,7 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\persons\PersonCaptainPatchRequest;
 use App\Http\Requests\persons\PersonCaptainPostRequest;
 use App\Http\Requests\boats\BoatPostRequest;
+use App\Http\Requests\persons\PersonPostRequest;
 use App\Services\persons\PersonService;
+use Illuminate\Support\Facades\Auth;
 
 class PersonController extends Controller
 {
@@ -57,12 +59,12 @@ class PersonController extends Controller
 
         return $this->response($message,201);
     }
-    public function storeOwner(BoatPostRequest $request, int $userId){
+    public function storeOwner(PersonPostRequest $request){
         $params = $request->request->all();
+        $user = auth('sanctum')->user();
+        $person =  $this->personService->storeOwner($params,$user);
 
-        $captain =  $this->personService->storeOwner($params,$userId);
-
-        $message = $this->setMessage('owner',$captain);
+        $message = $this->setMessage('person',$person);
 
         return $this->response($message,201);
     }

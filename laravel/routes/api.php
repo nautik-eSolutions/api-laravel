@@ -24,6 +24,9 @@ Route::patch('/users/{userId}', [UserController::class, 'update'])->middleware(U
 Route::delete('/users/{userId}', [UserController::class, 'destroy'])->middleware(UserExists::class);
 
 
+Route::post('/users/persons',[PersonController::class,'storeOwner'])->middleware('auth:sanctum');
+
+
 
 
 
@@ -36,7 +39,6 @@ Route::get('/users/{userId}/captains/{id}',[PersonController::class,'show'])->mi
 Route::get('/users/{userId}/owners/{id}',[PersonController::class,'show'])->middleware(UserExists::class);
 
 Route::post('/users/{userId}/captains',[PersonController::class,'storeCaptain'])->middleware(UserExists::class);
-Route::post('/users/{userId}/owners',[PersonController::class,'storeOwner'])->middleware(UserExists::class);
 Route::patch('/users/{userId}/captains/{captainId}',[PersonController::class,'updateCaptain'])->middleware(UserExists::class);
 Route::delete('/users/{userId}/captains/{captainId}',[PersonController::class,'destroyCaptain'])->middleware(UserExists::class);
 Route::delete('/users/{userId}/owners/{ownerId}',[PersonController::class,'destroyOwner'])->middleware(UserExists::class);
@@ -51,11 +53,12 @@ Route::delete('/boats/{boatId}',[BoatController::class,'destroy']);
 */
 
 Route::controller(BoatController::class)->group(function(){
-   Route::get('/boats','indexByUser');
+   Route::get('/boats','index');
+   Route::post('/boats','store');
 })->middleware('auth:sanctum');
 
 
-Route::apiResource('boats',BoatController::class);
+
 
 Route::get('/ports',[PortController::class,'index']);
 Route::get('/ports/{id}/moorings',[PortController::class,'indexMooringsByPort']);

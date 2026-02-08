@@ -20,11 +20,11 @@ class UserAuthController extends Controller
     }
 
     public function register(UserPostRequest $request){
-        $this->userService->store($request);
+        $user = $this->userService->store($request);
 
-        return response()->json([
-            'message' => 'User Created ',
-        ]);
+        $token = $user->createToken($user->name.'-AuthToken')->plainTextToken;
+
+        return $this->authenticatedResponse($user,$token);
     }
 
     public function login(UserLoginRequest $request){

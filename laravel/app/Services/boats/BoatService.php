@@ -18,27 +18,23 @@ class BoatService
         return $owner->boats();
 
     }
-    public function showBoatsByUser($userId){
-        $user = User::find($userId);
+    public function showBoatsByUser(User $user){
+        $person = $user->persons()->first();
 
-        return DB::table('boat')
-            ->join('user_person','user_person.person_id','=','boat.person_id')
-            ->join('user','user.id','=','user_person.user_id')
-            ->select('boat.*')->get();
+        return $person->boats;
 
     }
-    public function store($params, int $ownerId){
+    public function store($params, $user){
 
         $boat = new Boat($params);
 
         $boat_type = BoatType::where('name', $params['boat_type'])->first();
 
-        $owner = Person::find($ownerId);
+        $person = $user->persons()->first();
 
         $boat->boatType()->associate($boat_type);
 
-
-        return $owner->boats()->save($boat);
+        return $person->boats()->save($boat);
 
     }
 
@@ -48,7 +44,7 @@ class BoatService
 
     }
 
-    public function update($params, int $boatId){
+    public function update($params, $user,int $boatId){
 
         $boat= Boat::find($boatId);
 
