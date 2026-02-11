@@ -18,42 +18,38 @@ class UserController extends Controller
         $this->userService = new UserService();
     }
 
-    public function index()
-    {
-        $users = User::all();
-        return response()->json($users, 200);
-    }
-
-
     public function store(UserPostRequest $request){
-
         $user = $this->userService->store($request);
         return response()->json($user, 201);
     }
 
 
-    public function show(int $id)
+    public function show()
     {
-        $user = $this->userService->show($id);
+        $user = auth('sanctum')->user();
 
         return response()->json($user, 200);
     }
 
 
-    public function update(UserPatchRequest $request, int $id)
+    public function update(UserPatchRequest $request)
     {
-        $data = $this->userService->update($request,$id);
+        $user = auth('sanctum')->user();
+
+        $data = $this->userService->update($request,$user);
 
         return response()->json($data,200);
     }
 
 
 
-    public function destroy(int $id)
+    public function destroy()
     {
-        $data = $this->userService->delete($id);
+        $user = auth('sanctum')->user();
 
-        return response()->json($data,$data['status']);
+        $data = $this->userService->delete($user);
+
+        return response()->json($data,204);
 
     }
 }

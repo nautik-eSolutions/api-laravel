@@ -6,6 +6,7 @@ use App\Http\Requests\users\UserPatchRequest;
 use App\Http\Requests\users\UserPostRequest;
 use App\Models\users\User;
 use App\Repositories\users\UserRepository;
+use Illuminate\Support\Facades\Hash;
 use Throwable;
 
 class UserService
@@ -18,34 +19,24 @@ class UserService
     }
 
 
-    public function show($id) : User
-    {
-        return User::find($id);
-    }
-
-
     public function store(UserPostRequest $request) : User
     {
         $params = $request->request->all();
 
-        $params['password'] = bcrypt($params['password']);
+        $params['password'] = Hash::make($params['password']);
 
         return User::create($params);
     }
 
-    public function update(UserPatchRequest $request, $id): bool
+    public function update(UserPatchRequest $request, $user): bool
     {
         $params = $request->request->all();
-
-        $user = User::find($id);
 
         return $user->updateOrFail($params);
     }
 
-    public function delete($id) : bool
+    public function delete($user) : bool
     {
-        $user = User::find($id);
-
         return $user->deleteOrFail();
     }
 

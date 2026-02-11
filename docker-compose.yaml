@@ -7,7 +7,6 @@ services:
       - vendor:/var/www/html/vendor
     networks:
       - laravel
-
   web:
     image: httpd:2.4
     container_name: apache_web

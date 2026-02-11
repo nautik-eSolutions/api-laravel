@@ -5,15 +5,8 @@ namespace App\Http\Controllers\boats;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\boats\BoatPatchRequest;
 use App\Http\Requests\boats\BoatPostRequest;
-use App\Models\boats\Boat;
-use App\Models\boats\BoatType;
-use App\Models\users\User;
 use App\Services\boats\BoatService;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Validation\Rule;
-use function Pest\Laravel\json;
+use Illuminate\Support\Facades\Auth;
 
 class BoatController extends Controller
 {
@@ -25,25 +18,25 @@ class BoatController extends Controller
         $this->boatService = new BoatService();
     }
 
-    public function indexByOwner($ownerId){
+    public function index(){
 
-        $boats = $this->boatService->showBoatsByOwner($ownerId);
+        $user = auth('sanctum')->user();
 
-        return response()->json($boats,200);
-    }
-    public function indexByUser($userId){
-
-        $boats = $this->boatService->showBoatsByUser($userId);
+        $boats = $user->boats();
 
         return response()->json($boats,200);
     }
 
 
-    public function store(BoatPostRequest $request, int $ownerId)
+
+
+    public function store(BoatPostRequest $request)
     {
         $params = $request->request->all();
 
-        $boat = $this->boatService->store($params,$ownerId);
+        $user = auth('sanctum')->user();
+
+        $boat = $this->boatService->store($params,$user);
 
         return response()->json($boat, 201);
 
@@ -52,9 +45,11 @@ class BoatController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(int $id)
+    public function show($id)
     {
-        $boat = $this->boatService->show($id);
+        $user = auth('sanctum')->user();
+
+        $boat = $this->boatService->show($id,$user);
 
         return response()->json($boat, 200);
 
@@ -65,7 +60,9 @@ class BoatController extends Controller
     {
         $params = $request->request->all();
 
-        $boat = $this->boatService->update($params,$id);
+        $user =  auth('sanctum')->user();
+
+        $boat = $this->boatService->update($params,$user,$id);
 
         return response()->json($boat, 200);
 
@@ -73,8 +70,9 @@ class BoatController extends Controller
 
     public function destroy(int $boatId)
     {
+        $user = auth('sanctum')->user();
 
-        $this->boatService->destroy($boatId);
+        $this->boatService->destroy($boatId, $user);
 
         $message = 'Boat was deleted';
         return response()->json($message,204);

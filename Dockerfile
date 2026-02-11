@@ -10,7 +10,6 @@ RUN composer install \
     --no-scripts
 
 COPY laravel/ .
-
 RUN composer dump-autoload --optimize
 
 

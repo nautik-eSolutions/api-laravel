@@ -75,11 +75,9 @@ class PersonService
 
     }
 
-    public function storeOwner($params, $userId)
+    public function storeOwner($params, $user)
     {
         $params['is_owner'] = true;
-
-        $user = User::find($userId);
 
         $person = new Person($params);
 

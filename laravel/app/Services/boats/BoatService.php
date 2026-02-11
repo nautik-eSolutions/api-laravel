@@ -18,46 +18,38 @@ class BoatService
         return $owner->boats();
 
     }
-    public function showBoatsByUser($userId){
-        $user = User::find($userId);
+    public function showBoatsByUser(User $user){
+        $person = $user->persons()->first();
 
-        return DB::table('boat')
-            ->join('user_person','user_person.person_id','=','boat.person_id')
-            ->join('user','user.id','=','user_person.user_id')
-            ->select('boat.*')->get();
+        return $person->boats;
 
     }
-    public function store($params, int $ownerId){
+    public function store($params, $user){
 
         $boat = new Boat($params);
 
         $boat_type = BoatType::where('name', $params['boat_type'])->first();
 
-        $owner = Person::find($ownerId);
-
         $boat->boatType()->associate($boat_type);
 
-
-        return $owner->boats()->save($boat);
-
-    }
-
-    public function show($id){
-
-        return Boat::find($id);
+        return $user->boats()->save($boat);
 
     }
 
-    public function update($params, int $boatId){
+    public function show($id, $user){
 
-        $boat= Boat::find($boatId);
+        return $user->boats()->where('id','=',$id);
+
+    }
+
+    public function update($params,User $user,int $boatId){
+        $boat = $user->boats()->where('id','=',$boatId);
 
         return $boat->update($params);
     }
 
-    public function destroy($boatId){
-
-        $boat = Boat::find($boatId);
+    public function destroy($boatId, User $user){
+        $boat = $user->boats()->where('id','=',$boatId);
 
         return $boat->delete();
     }

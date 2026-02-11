@@ -2,30 +2,31 @@
 
 namespace App\Models\ports;
 
+use App\Models\booking\PriceConfiguration;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class MooringCategory extends Model
 {
-    protected $table = 'mooring_category';
-    public $timestamps = false;
-
-    protected $fillable = [
-        'max_length',
-        'max_beam'
-    ];
+    protected $table = 'mooring_categories';
 
 
-    public function zone(): BelongsTo
+    public function zones(): BelongsTo
     {
-        return $this->belongsTo(Zone::class);
+        return $this->belongsTo(Zone::class,'zone_id');
+    }
+    public function mooringDimensions(): BelongsTo
+    {
+        return $this->belongsTo(MooringDimensions::class);
     }
 
-    public function moorings():HasMany
+    public function moorings()
     {
         return $this->hasMany(Mooring::class);
     }
 
+    public function priceConfigurations(){
+        return $this->belongsToMany(PriceConfiguration::class,'mooring_zone_price_configuration');
+    }
 
 }
