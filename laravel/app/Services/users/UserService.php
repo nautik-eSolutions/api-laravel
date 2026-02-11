@@ -19,12 +19,6 @@ class UserService
     }
 
 
-    public function show($id) : User
-    {
-        return User::find($id);
-    }
-
-
     public function store(UserPostRequest $request) : User
     {
         $params = $request->request->all();
@@ -34,19 +28,15 @@ class UserService
         return User::create($params);
     }
 
-    public function update(UserPatchRequest $request, $id): bool
+    public function update(UserPatchRequest $request, $user): bool
     {
         $params = $request->request->all();
-
-        $user = User::find($id);
 
         return $user->updateOrFail($params);
     }
 
-    public function delete($id) : bool
+    public function delete($user) : bool
     {
-        $user = User::find($id);
-
         return $user->deleteOrFail();
     }
 

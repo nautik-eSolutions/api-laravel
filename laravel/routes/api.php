@@ -15,15 +15,22 @@ Route::post('/logout',[UserAuthController::class,'logout'])
     ->middleware('auth:sanctum');
 
 
+Route::controller(UserController::class)->group(function(){
+   Route::get('/users','show');
+   Route::patch('/users','update');
+   Route::delete('/users','destroy');
+})->middleware('auth:sanctum');
 
 
+
+/*
 Route::get('/users', [UserController::class, 'index']);
 Route::post('/users', [UserController::class, 'store']);
 Route::get('/users/{userId}', [UserController::class, 'show'])->middleware(UserExists::class);
 Route::patch('/users/{userId}', [UserController::class, 'update'])->middleware(UserExists::class);
 Route::delete('/users/{userId}', [UserController::class, 'destroy'])->middleware(UserExists::class);
 
-
+*/
 Route::post('/users/persons',[PersonController::class,'storeOwner'])->middleware('auth:sanctum');
 
 
