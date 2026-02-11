@@ -25,7 +25,10 @@ class UserPatchRequest extends FormRequest
             "last_name"=>'max:20|min:2',
             "user_name"=>'max:20|min:2',
             "email"=>'email',
-            "password"=>'min:8'
+            "password"=>'min:8',
+            "identification_document"=>'max:15',
+            "birth_date"=>'date',
+            "navigation_license"=>'max:200'
         ];
     }
     protected function failedValidation(Validator $validator)

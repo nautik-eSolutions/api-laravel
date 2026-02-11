@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Boat extends Model
 {
-    protected $table =  'boat';
+    protected $table = 'boat';
 
     protected $guarded = [];
     public $timestamps = false;
@@ -23,9 +23,9 @@ class Boat extends Model
         'draft'
     ];
 
-    public function owner(): BelongsTo
+    public function person(): BelongsTo
     {
-        return $this->belongsTo(Person::class);
+        return $this->belongsTo(User::class);
     }
 
     public function boatType(): BelongsTo
@@ -33,7 +33,7 @@ class Boat extends Model
         return $this->belongsTo(BoatType::class);
     }
 
-    public function bookings ( ): HasMany
+    public function bookings(): HasMany
     {
         return $this->hasMany(Booking::class);
     }

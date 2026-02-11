@@ -3,6 +3,7 @@
 namespace App\Models\users;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Http\Controllers\boats\BoatController;
 use App\Http\Resources\UserAuthResource;
 use App\Models\boats\Boat;
 
@@ -34,14 +35,21 @@ class User extends Authenticatable
         'user_name',
         'email',
         'password',
+        'first_name',
+        'last_name',
+        'identification_document',
+        'birth_date',
+        'navigation_license'
+    ];
+    protected $casts = [
+      'birth_date'=>'date'
     ];
 
 
-
-
-    public function persons():BelongsToMany
-    {
-        return $this->belongsToMany(Person::class,'user_person');
+    public function boats(){
+        return $this->hasMany(Boat::class);
     }
+
+
 
 }

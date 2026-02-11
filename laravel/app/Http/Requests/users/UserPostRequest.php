@@ -23,7 +23,11 @@ class UserPostRequest extends FormRequest
         return [
             "user_name"=>'required|max:20|min:2',
             "email"=>'required|email',
-            "password"=>'required|min:8'
+            "password"=>'required|min:8',
+            "first_name"=>'required|max:20|min:2',
+            "last_name"=>'required|max:20|min:2',
+            "identification_document"=>'required|max:20|min:2',
+            "birth_date"=>'required|date',
         ];
     }
     protected function failedValidation(Validator $validator)
