@@ -30,30 +30,26 @@ class BoatService
 
         $boat_type = BoatType::where('name', $params['boat_type'])->first();
 
-        $person = $user->persons()->first();
-
         $boat->boatType()->associate($boat_type);
 
-        return $person->boats()->save($boat);
+        return $user->boats()->save($boat);
 
     }
 
-    public function show($id){
+    public function show($id, $user){
 
-        return Boat::find($id);
+        return $user->boats()->where('id','=',$id);
 
     }
 
-    public function update($params, $user,int $boatId){
-
-        $boat= Boat::find($boatId);
+    public function update($params,User $user,int $boatId){
+        $boat = $user->boats()->where('id','=',$boatId);
 
         return $boat->update($params);
     }
 
-    public function destroy($boatId){
-
-        $boat = Boat::find($boatId);
+    public function destroy($boatId, User $user){
+        $boat = $user->boats()->where('id','=',$boatId);
 
         return $boat->delete();
     }

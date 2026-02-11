@@ -22,7 +22,7 @@ class BoatController extends Controller
 
         $user = auth('sanctum')->user();
 
-        $boats = $this->boatService->showBoatsByUser($user);
+        $boats = $user->boats();
 
         return response()->json($boats,200);
     }
@@ -45,9 +45,11 @@ class BoatController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(int $id)
+    public function show($id)
     {
-        $boat = $this->boatService->show($id);
+        $user = auth('sanctum')->user();
+
+        $boat = $this->boatService->show($id,$user);
 
         return response()->json($boat, 200);
 
@@ -58,7 +60,9 @@ class BoatController extends Controller
     {
         $params = $request->request->all();
 
-        $boat = $this->boatService->update($params,$id);
+        $user =  auth('sanctum')->user();
+
+        $boat = $this->boatService->update($params,$user,$id);
 
         return response()->json($boat, 200);
 
@@ -66,8 +70,9 @@ class BoatController extends Controller
 
     public function destroy(int $boatId)
     {
+        $user = auth('sanctum')->user();
 
-        $this->boatService->destroy($boatId);
+        $this->boatService->destroy($boatId, $user);
 
         $message = 'Boat was deleted';
         return response()->json($message,204);
