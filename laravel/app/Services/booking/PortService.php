@@ -12,5 +12,9 @@ class PortService
         return Port::all();
     }
 
+    public function show($portId){
+        return Port::find($portId);
+    }
+
 
 }

@@ -26,6 +26,13 @@ class PortController extends Controller
         $ports = $this->portService->index();
         return new PortCollection($ports);
     }
+
+    public function show($portId){
+        $port =  $this->portService->show($portId);
+
+        return new PortResource($port);
+    }
+
     public function indexMooringsByPort($portId){
         $moorings =  $this->mooringService->showMooringsByPort($portId);
 

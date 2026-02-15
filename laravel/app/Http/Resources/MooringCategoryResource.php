@@ -13,9 +13,9 @@ class MooringCategoryResource extends JsonResource
     {
         return [
             'id'=> $this->id,
-            'zone' => new ZoneResource($this->zones),
-            'price'=> new PriceConfigurationCollection($this->priceConfigurations)
-
+            'price'=> new PriceConfigurationCollection($this->priceConfigurations),
+            'beam'=>$this->mooringDimension->max_beam,
+            'length'=>$this->mooringDimension->max_length
         ];
 
     }

@@ -22,7 +22,8 @@ class BoatController extends Controller
 
         $user = auth('sanctum')->user();
 
-        $boats = $user->boats();
+        $boats = $user->boats;
+
 
         return response()->json($boats,200);
     }
@@ -35,6 +36,7 @@ class BoatController extends Controller
         $params = $request->request->all();
 
         $user = auth('sanctum')->user();
+
 
         $boat = $this->boatService->store($params,$user);
 

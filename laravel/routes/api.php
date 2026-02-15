@@ -23,10 +23,18 @@ Route::controller(UserController::class)->group(function(){
 
 Route::controller(BoatController::class)->group(function(){
    Route::get('/boats','index');
+   Route::get('/boats/{id}','show');
    Route::post('/boats','store');
    Route::patch('/boats/{id}','update');
    Route::delete('boats/{id}','destroy');
 })->middleware('auth:sanctum');
+
+
+Route::controller(PortController::class)->group(function(){
+
+    Route::get('/ports','index');
+    Route::get('/ports/{id}','show');
+});
 
 
 

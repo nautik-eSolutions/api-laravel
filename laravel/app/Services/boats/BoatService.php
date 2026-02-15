@@ -38,18 +38,18 @@ class BoatService
 
     public function show($id, $user){
 
-        return $user->boats()->where('id','=',$id);
+        return $user->boats()->where('id','=',$id)->get();
 
     }
 
     public function update($params,User $user,int $boatId){
-        $boat = $user->boats()->where('id','=',$boatId);
+        $boat = $user->boats()->where('id','=',$boatId)->get();
 
         return $boat->update($params);
     }
 
     public function destroy($boatId, User $user){
-        $boat = $user->boats()->where('id','=',$boatId);
+        $boat = $user->boats()->where('id','=',$boatId)->get();
 
         return $boat->delete();
     }
