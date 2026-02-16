@@ -20,9 +20,12 @@ class BoatController extends Controller
 
     public function index(){
 
-        $user = auth('sanctum')->user();
+         $user = auth('sanctum')->user();
 
-        $boats = $user->boats;
+        $boats = $user->boats()->get();
+
+
+
 
 
         return response()->json($boats,200);

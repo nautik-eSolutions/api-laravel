@@ -53,7 +53,11 @@ class UserAuthController extends Controller
 
     public function OAuthLogin(Request $request){
         $token =  $request->token;
-        return JwtService::decode($token);
+        $user = JwtService::getUser($token);
+
+        $token = $user->createToken($user->name.'-AuthToken')->plainTextToken;
+
+        return $this->authenticatedResponse($user,$token);
     }
 
 

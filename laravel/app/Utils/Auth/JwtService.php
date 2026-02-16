@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Utils\Auth;
+use App\Models\users\User;
+
 class JwtService
 {
 
@@ -48,6 +50,15 @@ class JwtService
                 $text
             )
         );
+    }
+
+    public static function getUser($token){
+        $decodedToken =  self::decode($token);
+        $id =  $decodedToken['sub'];
+
+        $user = User::find($id);
+
+        return $user;
     }
 
 }
