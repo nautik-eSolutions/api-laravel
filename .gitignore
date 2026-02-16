@@ -10,6 +10,7 @@ lerna-debug.log*
 docker-compose.yaml
 vendor
 
+.env
 node_modules
 .DS_Store
 dist
@@ -37,3 +38,4 @@ package-lock.json
 
 # Vitest
 __screenshots__/
+.
