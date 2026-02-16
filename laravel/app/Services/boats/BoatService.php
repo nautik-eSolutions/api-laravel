@@ -43,9 +43,9 @@ class BoatService
     }
 
     public function update($params,User $user,int $boatId){
-        $boat = $user->boats()->where('id','=',$boatId)->get();
+        $boat = $user->boats()->where('id','=',$boatId)->first();
 
-        return $boat->update($params);
+        return $boat->update($params) ? Boat::find($boatId): false;
     }
 
     public function destroy($boatId, User $user){

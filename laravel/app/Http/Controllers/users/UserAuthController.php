@@ -8,6 +8,7 @@ use App\Http\Requests\users\UserPostRequest;
 use App\Http\Resources\UserAuthResource;
 use App\Models\users\User;
 use App\Services\users\UserService;
+use App\Utils\Auth\JwtService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
@@ -48,6 +49,13 @@ class UserAuthController extends Controller
             "message"=>"logged out"
         ]);
     }
+
+
+    public function OAuthLogin(Request $request){
+        $token =  $request->token;
+        return JwtService::decode($token);
+    }
+
 
 
     private function authenticatedResponse($user, $token){

@@ -65,7 +65,9 @@ class BoatController extends Controller
         $user =  auth('sanctum')->user();
 
         $boat = $this->boatService->update($params,$user,$id);
+        if (!$boat){
 
+        }
         return response()->json($boat, 200);
 
     }
