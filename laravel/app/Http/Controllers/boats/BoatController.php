@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\boats\BoatPatchRequest;
 use App\Http\Requests\boats\BoatPostRequest;
 use App\Services\boats\BoatService;
+use App\Utils\Auth\JwtService;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class BoatController extends Controller
@@ -18,9 +20,11 @@ class BoatController extends Controller
         $this->boatService = new BoatService();
     }
 
-    public function index(){
+    public function index(Request $request){
 
-         $user = auth('sanctum')->user();
+        $user = JwtService::getUser($request->bearerToken());
+
+         //$user = auth('sanctum')->user();
 
         $boats = $user->boats()->get();
 
@@ -36,9 +40,13 @@ class BoatController extends Controller
 
     public function store(BoatPostRequest $request)
     {
+
+        $user = JwtService::getUser($request->bearerToken());
+
+
         $params = $request->request->all();
 
-        $user = auth('sanctum')->user();
+        //$user = auth('sanctum')->user();
 
 
         $boat = $this->boatService->store($params,$user);
@@ -50,9 +58,11 @@ class BoatController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show($id)
+    public function show(Request $request,$id)
     {
-        $user = auth('sanctum')->user();
+        //$user = auth('sanctum')->user();
+
+        $user = JwtService::getUser($request->bearerToken());
 
         $boat = $this->boatService->show($id,$user);
 
@@ -65,7 +75,9 @@ class BoatController extends Controller
     {
         $params = $request->request->all();
 
-        $user =  auth('sanctum')->user();
+        $user = JwtService::getUser($request->bearerToken());
+
+        //$user =  auth('sanctum')->user();
 
         $boat = $this->boatService->update($params,$user,$id);
         if (!$boat){
@@ -75,9 +87,10 @@ class BoatController extends Controller
 
     }
 
-    public function destroy(int $boatId)
+    public function destroy(int $boatId, Request $request)
     {
-        $user = auth('sanctum')->user();
+        //$user = auth('sanctum')->user();
+        $user = JwtService::getUser($request->bearerToken());
 
         $this->boatService->destroy($boatId, $user);
 

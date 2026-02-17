@@ -11,8 +11,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::post('/register',[UserAuthController::class,'register']);
 Route::post('/login',[UserAuthController::class,'login']);
-Route::post('/logout',[UserAuthController::class,'logout'])
-    ->middleware('auth:sanctum');
+Route::post('/logout',[UserAuthController::class,'logout']);
 Route::post('login/oauth',[UserAuthController::class,'OAuthLogin']);
 
 
@@ -20,7 +19,7 @@ Route::controller(UserController::class)->group(function(){
    Route::get('/users','show');
    Route::patch('/users','update');
    Route::delete('/users','destroy');
-})->middleware('auth:sanctum');
+});
 
 Route::controller(BoatController::class)->group(function(){
    Route::get('/boats','index');
@@ -28,7 +27,7 @@ Route::controller(BoatController::class)->group(function(){
    Route::post('/boats','store');
    Route::patch('/boats/{id}','update');
    Route::delete('boats/{id}','destroy');
-})->middleware('auth:sanctum');
+});
 
 
 Route::controller(PortController::class)->group(function(){
