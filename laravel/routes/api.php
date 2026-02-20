@@ -25,7 +25,7 @@ Route::controller(BoatController::class)->group(function(){
    Route::get('/boats','index');
    Route::get('/boats/{id}','show');
    Route::post('/boats','store');
-   Route::patch('/boats/{id}','update');
+   Route::put('/boats/{id}','update');
    Route::delete('boats/{id}','destroy');
 });
 

@@ -15,7 +15,7 @@ class BoatPostRequest extends FormRequest
         return [
             "name" => 'required|max:20',
             "registry_number" => 'required|max:15',
-            "length" => 'required|max:3|min:0',
+            "length" => 'required|max:3|min:1',
             "beam" => 'required|max:3|min:1',
             "draft" => 'required|max:3|min:1',
             "boat_type" => ['required', Rule::in("motor", "vela")]
