@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\boats\BoatController;
+use App\Http\Controllers\booking\BookingController;
 use App\Http\Controllers\payments\PaymentController;
 use App\Http\Controllers\persons\PersonController;
 use App\Http\Controllers\ports\PortController;
@@ -29,6 +30,8 @@ Route::controller(BoatController::class)->group(function(){
    Route::delete('boats/{id}','destroy');
 });
 
+
+Route::get('/bookings', [BookingController::class, 'index']);
 
 Route::controller(PortController::class)->group(function(){
 

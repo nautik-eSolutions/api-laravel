@@ -20,7 +20,7 @@ class MooringCategory extends Model
     ];
 
 
-    public function zones(): BelongsTo
+    public function zone(): BelongsTo
     {
         return $this->belongsTo(Zone::class,'zone_id');
     }

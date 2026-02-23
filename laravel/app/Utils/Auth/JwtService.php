@@ -61,4 +61,9 @@ class JwtService
         return $user;
     }
 
+    public static function getUserId($token){
+        $decodedToken =  self::decode($token);
+        return $decodedToken['sub'];
+    }
+
 }

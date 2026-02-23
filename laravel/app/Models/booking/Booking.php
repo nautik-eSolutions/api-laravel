@@ -18,7 +18,6 @@ class Booking extends Model
         'start_date',
         'end_date',
         'total_cost',
-        'payment_method',
         'boat_id',
     ];
 
@@ -32,7 +31,7 @@ class Booking extends Model
         return $this->belongsTo(BookingStatus::class);
     }
 
-    public function moorings() : BelongsTo
+    public function mooring() : BelongsTo
     {
         return $this->belongsTo(Mooring::class);
     }
