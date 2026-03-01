@@ -19,6 +19,7 @@ class Booking extends Model
         'end_date',
         'total_cost',
         'boat_id',
+        'order_number',
     ];
 
     public function boat(): BelongsTo
