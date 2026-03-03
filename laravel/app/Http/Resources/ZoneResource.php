@@ -14,7 +14,7 @@ class ZoneResource extends JsonResource
         return [
             'name'=>$this->name,
             'description'=>$this->description,
-            'mooring_categories'=>new MooringCategoryCollection($this->mooringCategories)
+            'mooring_categories'=> MooringCategoryResource::collection($this->mooringCategories)
         ];
     }
 }
