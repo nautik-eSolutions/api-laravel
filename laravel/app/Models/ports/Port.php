@@ -23,8 +23,14 @@ class Port extends Model
         'city_id',
         'company_id',
         'roles_configuration_id',
+        'lat',
         'lon',
-        'lat'
+        'vhf_channel',
+        'email',
+        'phoneNumber',
+        'gas_station',
+        'travel_lift',
+        'opening_hours',
     ];
 
     protected static function booted(): void
@@ -32,7 +38,7 @@ class Port extends Model
         static::addGlobalScope('coordinates', function ($builder) {
             $builder->selectRaw('
                 port.*,
-                
+
            
                 (
                     SELECT COUNT(m.id)
@@ -78,6 +84,11 @@ class Port extends Model
 
     public function zones():HasMany{
         return $this->hasMany(Zone::class);
+    }
+
+    public function image():HasMany
+    {
+        return $this->hasMany(PortImage::class);
     }
 
 }
