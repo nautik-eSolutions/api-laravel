@@ -23,7 +23,8 @@ class Port extends Model
         'city_id',
         'company_id',
         'roles_configuration_id',
-        'ubicacion',
+        'lon',
+        'lat'
     ];
 
     protected static function booted(): void
@@ -31,9 +32,7 @@ class Port extends Model
         static::addGlobalScope('coordinates', function ($builder) {
             $builder->selectRaw('
                 port.*,
-                ST_Y(ubicacion) as latitude,
-                ST_X(ubicacion) as longitude,
-
+                
            
                 (
                     SELECT COUNT(m.id)

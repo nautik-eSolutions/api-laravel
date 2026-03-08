@@ -13,13 +13,12 @@ class MooringResourece extends JsonResource
 
         return [
             'id' => $this->id,
-            'label' => sprintf(
-                'Amarre %s – Zona %s (%sm x %sm)',
-                $this->number,
-                $this->mooringCategory->zone->name,
-                $this->mooringCategory->mooringDimension->max_length,
-                $this->mooringCategory->mooringDimension->max_beam
-            ),
+            'number'=> $this->number,
+             'zone_name'=>$this->mooringCategory->zone->name,
+            'zone_description'=>$this->mooringCategory->zone->description,
+             'max_length'=>$this->mooringCategory->mooringDimension->max_length,
+             'max_beam'=>$this->mooringCategory->mooringDimension->max_beam
+
         ];
     }
 }

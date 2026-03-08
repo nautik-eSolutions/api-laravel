@@ -15,9 +15,9 @@ class BoatPatchRequest extends FormRequest
         return [
             "name" => 'max:20',
             "registry_number" => 'max:10',
-            "length" => 'max:3|min:0',
-            "beam" => 'max:3|min:1',
-            "draft" => 'max:3|min:1',
+            "length" => 'max:6|min:0',
+            "beam" => 'max:6|min:1',
+            "draft" => 'max:6|min:1',
             "boat_type" => [Rule::in("motor", "vela")]
         ];
     }
