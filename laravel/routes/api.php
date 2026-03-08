@@ -35,6 +35,7 @@ Route::controller(BookingController::class)->group(function(){
     Route::get('/bookings', [BookingController::class, 'index']);
     Route::get('/bookings/{id}', [BookingController::class, 'show']);
     Route::get('/bookings/invoice/{id}', [BookingController::class, 'invoice']);
+    Route::get('/bookings/boats/{id}', [BookingController::class, 'bookingsBoat']);
 
 });
 

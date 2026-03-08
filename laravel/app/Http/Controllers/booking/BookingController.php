@@ -63,4 +63,15 @@ class BookingController
         ]);
 
     }
+
+    public function bookingsBoat(Request $request, $id){
+
+        $user = JwtService::getUserId($request->bearerToken());
+
+        $bookings = BookingService::getBookingsByBoat($user, $id);
+
+        return BookingResource::collection($bookings);
+
+
+    }
 }

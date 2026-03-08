@@ -31,4 +31,18 @@ class BookingService
 
     }
 
+    public static function getBookingsByBoat($user, $idBoat){
+
+        return Booking::with([
+            'mooring.mooringCategory.zone.port',
+            'boat'
+        ])
+            ->whereHas('boat', function ($query) use ($user, $idBoat) {
+                $query->where('boat_id', $idBoat)
+                    ->where('user_id', $user);
+            })
+            ->get();
+
+    }
+
 }
