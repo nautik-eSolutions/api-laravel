@@ -16,13 +16,13 @@ Route::post('/logout',[UserAuthController::class,'logout']);
 Route::post('login/oauth',[UserAuthController::class,'OAuthLogin']);
 
 
-Route::controller(UserController::class)->group(function(){
-   Route::get('/users','show');
-   Route::patch('/users','update');
-   Route::delete('/users','destroy');
-});
+Route::middleware(['jwt.auth'])->controller(UserController::class)->group(function () {
+        Route::get('/users', 'show');
+        Route::patch('/users', 'update');
+        Route::delete('/users', 'destroy');
+    });
 
-Route::controller(BoatController::class)->group(function(){
+Route::middleware(['jwt.auth'])->controller(BoatController::class)->group(function(){
    Route::get('/boats','index');
    Route::get('/boats/{id}','show');
    Route::post('/boats','store');
@@ -31,7 +31,7 @@ Route::controller(BoatController::class)->group(function(){
 });
 
 
-Route::controller(BookingController::class)->group(function(){
+Route::middleware(['jwt.auth'])->controller(BookingController::class)->group(function(){
     Route::get('/bookings', [BookingController::class, 'index']);
     Route::get('/bookings/{id}', [BookingController::class, 'show']);
     Route::get('/bookings/invoice/{id}', [BookingController::class, 'invoice']);
